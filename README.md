@@ -2,6 +2,10 @@
 ## Linguagem: Python ; Framework: django
 
 ### Instalando
+1. Descompacte o arquivo  django.tar.gz
+
+ou
+
 1. pip install Django==1.10.1
 
 ou

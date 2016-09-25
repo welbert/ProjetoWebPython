@@ -23,7 +23,7 @@ class Municao(models.Model):
 class Acessorio(models.Model):
     descricao = models.CharField(max_length=250)
     def __str__(self):
-        return "Descricao: "+self.descricao
+        return self.descricao
 
 class Militar(models.Model):
     posto = models.CharField(max_length=60)

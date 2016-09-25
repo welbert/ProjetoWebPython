@@ -1,6 +1,12 @@
 > # Projeto LabWeb
 ## Linguagem: Python ; Framework: django
 
+### Equipe:
+  * Bruno Novaes
+  * Diego Novaes
+  * Iran Cezar
+  * Welbert Serra
+
 ### Instalando
 1. Descompacte o arquivo  django.tar.gz
 

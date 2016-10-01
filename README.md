@@ -1,5 +1,5 @@
 > # Projeto LabWeb
-## Linguagem: Python ; Framework: django
+## Linguagem: Python ; Framework: [Django](https://www.djangoproject.com/)
 
 ### Equipe:
   * Bruno Novaes
@@ -32,12 +32,22 @@ Pass: virtualbox
 
 > # TODO 
 
+- [ ] Cronograma
+- [ ] Material Escrito
+  - [ ] Capa
+  - [ ] Contracapa com tema, equipe, dados da disciplina e demais informações pertinentes ao tema. 
+  - [ ] Diagrama de Classes
+  - [x] Entidade e Relacionamento 
+- [ ] Slides
 - [x] *Login/Logout*
 - [x] *Menu de opções*
-- [x] **Tela(Simples)** *Usuário* (nome completo, login, senha, email);
-- [x] **Tela(Simples)** *Reserva* (sigla, descrição);
-- [x] **Tela(Simples)** *Munição* (calibre, descrição);
-- [x] **Tela(Simples)** *Militar* (posto/graduação, nome de guerra);
+- [ ] **Tela(Simples)** *Usuário* (nome completo, login, senha, email);
+- [ ] **Tela(Simples)** *Armamento* (nº de série, modelo, fabricante);
+- [ ] **Tela(Simples)** *Acessórios* (descrição);
+- [ ] **Tela(Simples)** *Munição* (calibre, descrição);
+- [ ] **Tela(Simples)** *Produto* ('Armamento/Acessórios/Munição'[Classe Genérica]);
+- [ ] **Tela(Simples)** *Reserva* (sigla, descrição);
+- [ ] **Tela(Simples)** *Militar* (posto/graduação, nome de guerra);
 - [ ] **Tela(Integração)** *ReservaMaterial* (cadastro de armamento, munição e acessórios com suas respectivas quantidades na reserva de armamento)
 - [ ] **Tela(Integração)** *Cautela* (controle da retirada do armamento pelos militares, com: militar, armamentos e munições)
 - [ ] **Regra(Negócio)** Um militar da reserva de armamento cadastra todos os armamentos, munições e acessórios (lanterna, mascara de gás,coldre, bandoleira, etc) e em seguida (em Manter Reserva Material) informa quanto ele tem de cada equipamento na reserva.

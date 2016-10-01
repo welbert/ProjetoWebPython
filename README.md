@@ -36,7 +36,7 @@ Pass: virtualbox
 - [ ] Material Escrito
   - [ ] Capa
   - [ ] Contracapa com tema, equipe, dados da disciplina e demais informações pertinentes ao tema. 
-  - [ ] Diagrama de Classes
+  - [x] Diagrama de Classes
   - [x] Entidade e Relacionamento 
 - [ ] Slides
 - [x] *Login/Logout*

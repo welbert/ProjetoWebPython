@@ -36,8 +36,8 @@ Pass: virtualbox
 - [ ] Material Escrito
   - [ ] Capa
   - [ ] Contracapa com tema, equipe, dados da disciplina e demais informações pertinentes ao tema.
-  - [ ] Diagrama de Classes `REVISAR - Retirar a classe produto`
-  - [ ] Entidade e Relacionamento `REVISAR - Retirar a classe produto`
+  - [x] Diagrama de Classes 
+  - [ ] Entidade e Relacionamento `TODO: Relacionar user com militar`
 - [ ] Slides
 - [x] *Login/Logout*
 - [x] *Menu de opções*

@@ -1,6 +1,10 @@
 from django.contrib import admin
 
-from .models import Armamento,Reserva,Municao,Acessorio,Militar
+from .models import Armamento,Reserva,Municao,Acessorio,Militar,Cautela
+
+class CautelaInline(admin.StackedInline):
+    model = Cautela
+    extra = 1
 
 class ArmamentoAdmin(admin.ModelAdmin):
     fieldsets = [
@@ -31,6 +35,7 @@ class MilitarAdmin(admin.ModelAdmin):
     list_display = ('posto','nome_de_guerra')
     search_fields = ['posto','nome_de_guerra']
     list_filter = ['posto']
+    inlines = [CautelaInline]
 
 
 admin.site.register(Armamento,ArmamentoAdmin)
@@ -38,3 +43,4 @@ admin.site.register(Reserva,ReservaAdmin)
 admin.site.register(Municao,MunicaoAdmin)
 admin.site.register(Acessorio,AcessorioAdmin)
 admin.site.register(Militar,MilitarAdmin)
+admin.site.register(Cautela)

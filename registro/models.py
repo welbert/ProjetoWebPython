@@ -60,6 +60,7 @@ class Cautela_Acessorio(models.Model):
 
 class Cautela(models.Model):
     data_de_retirada = models.DateTimeField('Data de Retirada')
+    militar = models.ForeignKey('Militar',blank=True,null=True)
     armamento = models.ManyToManyField(Armamento, through="Cautela_Armamento")
     municao = models.ManyToManyField(Municao, through="Cautela_Municao")
     acessorio = models.ManyToManyField(Acessorio, through="Cautela_Acessorio")
@@ -69,7 +70,7 @@ class Cautela(models.Model):
 class Militar(models.Model):
     posto = models.CharField('Posto',max_length=60)
     nome_de_guerra = models.CharField('Nome de Guerra',max_length=120)
-    cautela = models.ManyToManyField(Cautela)
+    #cautela = models.ManyToManyField(Cautela)
     reserva = models.ForeignKey('Reserva',blank=True,null=True)
     def __str__(self):
         return "Posto: "+self.posto+" - Nome de Guerra: "+self.nome_de_guerra

@@ -41,7 +41,7 @@ class Reserva(models.Model):
     municao = models.ManyToManyField(Municao, through="Reserva_Municao")
     acessorio = models.ManyToManyField(Acessorio, through="Reserva_Acessorio")
     def __str__(self):
-        return "Sigla: "+self.sigla+" - Descricao: "+self.descricao
+        return self.sigla
 
 class Cautela_Armamento(models.Model):
     armamento = models.ForeignKey('Armamento')
@@ -59,7 +59,7 @@ class Cautela_Acessorio(models.Model):
     quantidade = models.FloatField('Quantidade')
 
 class Cautela(models.Model):
-    data_de_retirada = models.DateTimeField('Data de Retirada',auto_now_add=True)
+    data_de_retirada = models.DateTimeField('Data de Retirada')
     armamento = models.ManyToManyField(Armamento, through="Cautela_Armamento")
     municao = models.ManyToManyField(Municao, through="Cautela_Municao")
     acessorio = models.ManyToManyField(Acessorio, through="Cautela_Acessorio")

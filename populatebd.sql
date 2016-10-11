@@ -20,10 +20,10 @@ INSERT INTO registro_armamento
 VALUES ('PT101','Taurus S.A.',79234);
 INSERT INTO registro_armamento
 (modelo,fabricante,numero_de_serie)
-VALUES ('PT101','Amadeo Rossi S.A.',79234);
+VALUES ('RF201','Amadeo Rossi S.A.',47262);
 INSERT INTO registro_armamento
 (modelo,fabricante,numero_de_serie)
-VALUES ('PT101','CBC',79234);
+VALUES ('PT056','CBC',88426);
 
 
 INSERT INTO registro_municao

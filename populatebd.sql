@@ -28,7 +28,7 @@ VALUES ('PT056','CBC',88426);
 
 INSERT INTO registro_municao
 (calibre,descricao)
-VALUES (12,'gáugio 12');
+VALUES (12,'gaugio 12');
 INSERT INTO registro_municao
 (calibre,descricao)
 VALUES (7.62,'7,62 mm NATO');

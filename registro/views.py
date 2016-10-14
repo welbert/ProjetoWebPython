@@ -6,19 +6,71 @@ from django.contrib.auth.decorators import login_required
 from django.template import loader
 
 # Create your views here.
+
 @login_required(login_url="../admin/login/")
 def index(request):
+    template = loader.get_template('registro/index.html')
+    return HttpResponse(template.render(request))
+
+
+@login_required(login_url="../admin/login/")
+def listar(request):
     #return HttpResponse( "This is a test index" );
     template = loader.get_template('registro/listar.html')
 
-    armamento_list = Armamento.objects.order_by('-id')
-    municao_list = Municao.objects.order_by('-id')
-    acessorio_list= Acessorio.objects.order_by('-id')
+    armamento_list = Armamento.objects.order_by('id')
+    municao_list = Municao.objects.order_by('id')
+    acessorio_list= Acessorio.objects.order_by('id')
+
+    armamento_count = Armamento.objects.count()
+    municao_count= Municao.objects.count()
+    acessorio_count= Acessorio.objects.count()
 
     context = {
         'armamento_list': armamento_list,
+        'armamento_count': armamento_count,
         'municao_list': municao_list,
-        'acessorio_list': acessorio_list
+        'municao_count': municao_count,
+        'acessorio_list': acessorio_list,
+        'acessorio_count': acessorio_count
+    }
+    return HttpResponse(template.render(context, request))
+
+def list_arma(request):
+    template = loader.get_template('registro/listar.html')
+
+    armamento_list = Armamento.objects.order_by('id')
+    armamento_count = Armamento.objects.count()
+
+    context = {
+        'armamento_list': armamento_list,
+        'armamento_count': armamento_count,
+    }
+    return HttpResponse(template.render(context, request))
+
+def list_muni(request):
+    template = loader.get_template('registro/listar.html')
+
+    municao_list = Municao.objects.order_by('id')
+
+    municao_count= Municao.objects.count()
+
+    context = {
+        'municao_list': municao_list,
+        'municao_count': municao_count,
+    }
+    return HttpResponse(template.render(context, request))
+
+def list_acesso(request):
+    template = loader.get_template('registro/listar.html')
+
+    acessorio_list = Acessorio.objects.order_by('id')
+
+    acessorio_count= Acessorio.objects.count()
+
+    context = {
+        'acessorio_list': acessorio_list,
+        'acessorio_count': acessorio_count,
     }
     return HttpResponse(template.render(context, request))
 

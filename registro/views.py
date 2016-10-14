@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: utf-8 -*-
 
 from django.shortcuts import render, HttpResponse
 from .models import Armamento, Municao, Acessorio

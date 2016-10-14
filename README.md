@@ -48,6 +48,8 @@ Pass: virtualbox
 - [x] **Tela(Simples)** *Reserva* (sigla, descrição);
 - [x] **Tela(Integração)** *ReservaMaterial* (cadastro de armamento, munição e acessórios com suas respectivas quantidades na reserva de armamento)
 - [x] **Tela(Integração)** *Cautela* (controle da retirada do armamento pelos militares, com: militar, armamentos e munições)
-- [ ] **Regra(Negócio)** Um militar da reserva de armamento cadastra todos os armamentos, munições e acessórios (lanterna, mascara de gás,coldre, bandoleira, etc) e em seguida (em Manter Reserva Material) informa quanto ele tem de cada equipamento na reserva.
-- [ ] **Regra(Negócio)** Um outro militar pode se dirigir a reserva de armamento para cautelar armamento(s), munição e/ou acessórios. Nesse momento o militar da reserva registra essa retirada (Manter Cautela) informando o militar e tudo que ele está retirando, nesse momento é feito um registro com data, hora, militar responsável e todo o material retirado.
-- [ ] **Regra(Negócio)** Quando o militar retorna a reserva de armamento para devolver o material, é dado a baixa no equipamento. Esse material pode ser devolvido aos poucos.
+- [ ] **Regra(Negócio) - item 1** Um militar da reserva de armamento cadastra todos os armamentos, munições e acessórios (lanterna, mascara de gás,coldre, bandoleira, etc) e em seguida (em Manter Reserva Material) informa quanto ele tem de cada equipamento na reserva.
+  - [x] Código back-end. */p_registro/
+  - [ ] Código front-end.
+- [ ] **Regra(Negócio) - item 2** Um outro militar pode se dirigir a reserva de armamento para cautelar armamento(s), munição e/ou acessórios. Nesse momento o militar da reserva registra essa retirada (Manter Cautela) informando o militar e tudo que ele está retirando, nesse momento é feito um registro com data, hora, militar responsável e todo o material retirado.
+- [ ] **Regra(Negócio) - item 3** Quando o militar retorna a reserva de armamento para devolver o material, é dado a baixa no equipamento. Esse material pode ser devolvido aos poucos.

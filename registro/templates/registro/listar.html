@@ -1,0 +1,32 @@
+{% extends 'base/layout.html' %}
+
+{% block title %}Armamentos{% endblock %}
+
+{% block content %}
+<table class="table table-bordered table-responsive">
+<thead>
+<tr>
+    <td>Id</td>
+    <td>Número de Série</td>
+    <td>Fabricante</td>
+    <td>Modelo</td>
+    <td>Ação</td>
+</tr>
+</thead>
+<tbody>
+    {% for item in armamento_list %}
+        <tr>
+            <td>{{ item.id}}</td>
+            <td>{{ item.numero_de_serie}}</td>
+            <td>{{ item.fabricante}}</td>
+            <td>{{ item.modelo}}</td>
+            <td>
+                <a href="{% url 'index' %}"><button class="btn btn-success">Editar</button></a>
+                <a href="{% url 'index' %}" onclick="return confirm('Deseja Excluir?')"><button class="btn btn-danger">Excluir!</button></a>
+            </td>
+        </tr>
+    {% endfor %}
+</tbody>
+</table>
+
+{% endblock %}

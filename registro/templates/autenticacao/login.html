@@ -1,0 +1,27 @@
+{% extends 'base/layout.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="/static/bootstrap/css/login.css">
+{% endblock %}
+
+{% block content %}
+
+      <form class="form-signin" method="post" action="{% url 'loginPost' %}">
+          {% csrf_token %}
+        <h2 class="form-signin-heading">Tela de Login</h2>
+        <label for="inputEmail" class="sr-only">Email</label>
+        <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+        <label for="inputPassword" class="sr-only">Senha</label>
+        <input name="senha" type="password" id="inputPassword" class="form-control" placeholder="Senha" required>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" value="remember-me"> Lembrar-me
+          </label>
+        </div>
+        <p><a href="{% url 'formulario' %}">Registrar</a></p>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+      </form>
+
+{% endblock %}

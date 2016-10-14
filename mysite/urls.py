@@ -17,7 +17,8 @@ from django.conf.urls import include, url
 from django.contrib import admin
 
 urlpatterns = [
+    url(r'^ProjetoWebPython/', include('registro.urls')),
     url(r'p_registro/', include('registro.urls')),
     url(r'^admin/', admin.site.urls),
-    url(r'^', admin.site.urls),
+    url(r'^', include('registro.urls')),
 ]

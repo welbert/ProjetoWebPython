@@ -2,10 +2,25 @@
 
 from django.shortcuts import render, HttpResponse
 from .models import Armamento, Municao, Acessorio
+from django.contrib.auth.decorators import login_required
+from django.template import loader
 
 # Create your views here.
+@login_required(login_url="../admin/login/")
 def index(request):
-    return HttpResponse( "This is a test index" );
+    #return HttpResponse( "This is a test index" );
+    template = loader.get_template('registro/listar.html')
+
+    armamento_list = Armamento.objects.order_by('-id')
+    municao_list = Municao.objects.order_by('-id')
+    acessorio_list= Acessorio.objects.order_by('-id')
+
+    context = {
+        'armamento_list': armamento_list,
+        'municao_list': municao_list,
+        'acessorio_list': acessorio_list
+    }
+    return HttpResponse(template.render(context, request))
 
 def shows_equip_reserva_num(request, equip_reserva_id):
     #response = "You can see here number of each type of equipament/armament you have in the storage (reserva) %s"

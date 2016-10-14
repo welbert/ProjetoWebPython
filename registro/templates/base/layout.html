@@ -8,10 +8,15 @@
     <link rel="stylesheet" href="/static/css/jquery-ui.css">
     <link rel="stylesheet" href="/static/css/jquery-ui.structure.css">
     <link rel="stylesheet" href="/static/css/jquery-ui.theme.css">
+    <!-- select box -->
+    <!--<link rel="stylesheet" href="/static/bootstrap/css/bootstrap-combined.min.css">
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap-select.min.css">-->
+
+    <link rel="icon" href="{% static "/css/images/favicon.ico" %}" >
     <!-- Custom styles for this template -->
     <link href="/static/bootstrap/css/jumbotron-narrow.css" rel="stylesheet">
     {% block head %} {% endblock %}
-    <title>{% block title %}Projeto LAB Web - Python{% endblock %}</title>
+    <title>{% block title %}Reserva de Materiais Web - Python{% endblock %}</title>
 </head>
 <body>
 <div class="container">
@@ -30,10 +35,18 @@
 </div>
 <script src="/static/js/jquery-3.1.0.js" type="application/javascript"></script>
 <script src="/static/bootstrap/js/bootstrap.js" type="application/javascript"></script>
+<!--<script src="/static/bootstrap/js/bootstrap-select.min.js" type="application/javascript"></script> -->
 <script src="/static/js/jquery-ui.js" type="application/javascript"></script>
 <script src="/static/js/jquery.mask.js" type="application/javascript"></script>
 <script src="/static/js/datepicker-pt-BR.js" type="application/javascript"></script>
 <script type="application/javascript" src="/static/js/app.js"></script>
+<script>
+$(document).ready(function(){
+  $('.datepicker').datepicker();
+  //$('.selectpicker').selectpicker();
+});
+</script>
+
 {% block beforeBodyEnd %}{% endblock %}
 </body>
 </html>

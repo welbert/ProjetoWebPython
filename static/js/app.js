@@ -11,9 +11,6 @@ App.FormularioController = {
             changeYear: true,
             yearRange: 'c-130:c'
         });
-        $('#cep').keyup(function () {
-            App.FormularioController.buscaCep(this.value);
-        });
         $('#formulario1').submit(function (event) {
            if(!App.FormularioController.validaCPF($('#cpf').val())){
                alert("CPF Inválido! Informe o CPF corretamente!");
@@ -23,37 +20,6 @@ App.FormularioController = {
            }
            return true;
         });
-    },
-    buscaCep: function (cep) {
-        cep = cep.replace(/[^0-9]/g, '');
-        if (cep.length != 8) {
-            return false;
-        }
-        var url = 'https://viacep.com.br/ws/' + cep + '/json/';
-        App.FormularioController.limparEndereco();
-        $.getJSON(url, {}, function (result) {
-            if (result.erro == true) {
-                alert("Erro ao buscar CEP! Verifique o CEP informado!");
-                $('[name^=cep]').removeAttr('disabled');
-                return false;
-            }
-            $('#rua').val(result.logradouro);
-            $('#bairro').val(result.bairro);
-            $('#complemento').val(result.complemento);
-            $('#cidade').val(result.localidade);
-            $('#estado').val(result.uf);
-            $('.endereco').removeAttr('disabled');
-            $('#numero').focus();
-        })
-    },
-    limparEndereco: function () {
-        $('#rua').val('');
-        $('#numero').val('');
-        $('#bairro').val('');
-        $('#complemento').val('');
-        $('#cidade').val('');
-        $('#estado').val('');
-        $('.endereco').attr('disabled');
     },
     sleep: function (milliseconds) {
         var start = new Date().getTime();

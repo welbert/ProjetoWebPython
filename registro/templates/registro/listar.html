@@ -34,7 +34,7 @@
             <td>{{ item.fabricante}}</td>
             <td>{{ item.modelo}}</td>
             <td>
-                <a href="{% url 'index' %}"><button class="btn btn-success">Editar</button></a>
+                <a href="/admin/registro/armamento/{{item.id}}/change/"><button class="btn btn-success">Editar</button></a>
             <!--    <a href="{% url 'index' %}" onclick="return confirm('Deseja Excluir?')"><button class="btn btn-danger">Excluir!</button></a>-->
             </td>
         </tr>

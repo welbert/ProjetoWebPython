@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.shortcuts import render, HttpResponse
-from .models import Armamento, Municao, Acessorio
+from .models import Armamento, Municao, Acessorio, Militar
 from django.contrib.auth.decorators import login_required
 from django.template import loader
 
@@ -118,3 +118,15 @@ def shows_equip_reserva_num(request, equip_reserva_id):
     output += "<br><br><b> Total de equipamentos cadastrados: "+str(i+im+ia)+'<b>'
 
     return HttpResponse( output )
+
+@login_required(login_url="../admin/login/")
+def cautelar_index(request):
+
+    #militar = models.ForeignKey('Militar',blank=True,null=True)
+    militares = Militar.objects.raw('SELECT id, nome_de_guerra FROM registro_militar')
+    context = {
+        'militares': militares,
+    }
+
+    template = loader.get_template('registro/cautelar.html')
+    return HttpResponse(template.render(context, request))

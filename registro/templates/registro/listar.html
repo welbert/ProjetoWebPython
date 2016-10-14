@@ -1,8 +1,21 @@
 {% extends 'base/layout.html' %}
 
-{% block title %}Armamentos{% endblock %}
+{% block title %}Equipamentos{% endblock %}
 
 {% block content %}
+
+<div class="header clearfix">
+    <nav>
+      <ul class="nav nav-pills" style=" margin-left: 31%;">
+        <li role="presentation" ><a href="{% url 'armamento' %}">Armamentos</a></li>
+        <li role="presentation" ><a href="{% url 'municao' %}">Munições</a></li>
+        <li role="presentation" ><a href="{% url 'acessorio' %}">Acesssórios</a></li>
+      </ul>
+    </nav>
+</div>
+
+{% if armamento_list %}
+<h2>Armamentos</h2>
 <table class="table table-bordered table-responsive">
 <thead>
 <tr>
@@ -28,5 +41,62 @@
     {% endfor %}
 </tbody>
 </table>
+<h5>Total de armamentos: {{ armamento_count }}</h5>
+{% endif %}
+
+
+{% if municao_list %}
+<h2>Munição</h2>
+<table class="table table-bordered table-responsive">
+<thead>
+<tr>
+    <td>Id</td>
+    <td>Calibre</td>
+    <td>Descrição</td>
+    <td>Ação</td>
+</tr>
+</thead>
+<tbody>
+    {% for item in municao_list %}
+        <tr>
+            <td>{{ item.id}}</td>
+            <td>{{ item.calibre}}</td>
+            <td>{{ item.descricao}}</td>
+            <td>
+                <a href="{% url 'index' %}"><button class="btn btn-success">Editar</button></a>
+                <a href="{% url 'index' %}" onclick="return confirm('Deseja Excluir?')"><button class="btn btn-danger">Excluir!</button></a>
+            </td>
+        </tr>
+    {% endfor %}
+</tbody>
+</table>
+<h5>Total de munições: {{ municao_count }}</h5>
+{% endif %}
+
+{% if acessorio_list %}
+<h2>Acessorios</h2>
+<table class="table table-bordered table-responsive">
+<thead>
+<tr>
+    <td>Id</td>
+    <td>Descrição</td>
+    <td>Ação</td>
+</tr>
+</thead>
+<tbody>
+    {% for item in acessorio_list %}
+        <tr>
+            <td>{{ item.id}}</td>
+            <td>{{ item.descricao}}</td>
+            <td>
+                <a href="{% url 'index' %}"><button class="btn btn-success">Editar</button></a>
+                <a href="{% url 'index' %}" onclick="return confirm('Deseja Excluir?')"><button class="btn btn-danger">Excluir!</button></a>
+            </td>
+        </tr>
+    {% endfor %}
+</tbody>
+</table>
+<h5>Total de acessórios: {{ acessorio_count }}</h5>
+{% endif %}
 
 {% endblock %}

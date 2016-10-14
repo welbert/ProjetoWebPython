@@ -1,9 +1,15 @@
-{% if armamento_list %}
-    <ul>
-    {% for question in armamento_list %}
-        <li><a href="/polls/{{ question.id }}/">{{ question.fabricante}}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No polls are available.</p>
-{% endif %}
+{% extends 'base/layout.html' %}
+<div class="container">
+    <div class="header clearfix">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation" class="active"><a href="{% url 'index' %}">Home</a></li>
+            <li role="presentation"><a href="{% url 'listar' %}">Visualizar Equipamentos</a></li>
+          </ul>
+        </nav>
+        <h3 class="text-muted">Reserva de Materiais Web</h3>
+    </div>
+    <div class="clearfix"></div>
+    {% block content %}{% endblock %}
+</div>
+

@@ -36,6 +36,7 @@ def listar(request):
     }
     return HttpResponse(template.render(context, request))
 
+@login_required(login_url="../admin/login/")
 def list_arma(request):
     template = loader.get_template('registro/listar.html')
 
@@ -48,6 +49,7 @@ def list_arma(request):
     }
     return HttpResponse(template.render(context, request))
 
+@login_required(login_url="../admin/login/")
 def list_muni(request):
     template = loader.get_template('registro/listar.html')
 
@@ -61,6 +63,7 @@ def list_muni(request):
     }
     return HttpResponse(template.render(context, request))
 
+@login_required(login_url="../admin/login/")
 def list_acesso(request):
     template = loader.get_template('registro/listar.html')
 

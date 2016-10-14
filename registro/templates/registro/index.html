@@ -1,15 +1,18 @@
 {% extends 'base/layout.html' %}
-<div class="container">
+
+{% block content %}
+  <div class="container">
+    <h3>Menu de Ações</h3>
     <div class="header clearfix">
         <nav>
-          <ul class="nav nav-pills pull-right">
-            <li role="presentation" class="active"><a href="{% url 'index' %}">Home</a></li>
-            <li role="presentation"><a href="{% url 'listar' %}">Visualizar Equipamentos</a></li>
+          <ul class="nav nav-pills ">
+            <li role="presentation"><a href="/admin/registro">Cadastrar Equipamentos</a></li>
+            <li role="presentation"><a href="{% url 'listar' %}">Listar Equipamentos</a></li>
+            <li role="presentation"><a href="{% url 'listar' %}">Cautelar</a></li>
           </ul>
         </nav>
-        <h3 class="text-muted">Reserva de Materiais Web</h3>
     </div>
     <div class="clearfix"></div>
-    {% block content %}{% endblock %}
-</div>
+  </div>
+{% endblock %}
 

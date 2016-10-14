@@ -35,7 +35,7 @@
             <td>{{ item.modelo}}</td>
             <td>
                 <a href="{% url 'index' %}"><button class="btn btn-success">Editar</button></a>
-                <a href="{% url 'index' %}" onclick="return confirm('Deseja Excluir?')"><button class="btn btn-danger">Excluir!</button></a>
+            <!--    <a href="{% url 'index' %}" onclick="return confirm('Deseja Excluir?')"><button class="btn btn-danger">Excluir!</button></a>-->
             </td>
         </tr>
     {% endfor %}
@@ -64,7 +64,6 @@
             <td>{{ item.descricao}}</td>
             <td>
                 <a href="{% url 'index' %}"><button class="btn btn-success">Editar</button></a>
-                <a href="{% url 'index' %}" onclick="return confirm('Deseja Excluir?')"><button class="btn btn-danger">Excluir!</button></a>
             </td>
         </tr>
     {% endfor %}
@@ -90,7 +89,6 @@
             <td>{{ item.descricao}}</td>
             <td>
                 <a href="{% url 'index' %}"><button class="btn btn-success">Editar</button></a>
-                <a href="{% url 'index' %}" onclick="return confirm('Deseja Excluir?')"><button class="btn btn-danger">Excluir!</button></a>
             </td>
         </tr>
     {% endfor %}

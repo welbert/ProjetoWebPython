@@ -41,12 +41,11 @@ Pass: virtualbox
 - [ ] Slides
 - [x] *Login/Logout*
 - [x] *Menu de opções*
-- [x] **Tela(Simples)** *Usuário* (nome completo, login, senha, email);
+- [ ] **Tela(Simples)** *Usuário* (nome completo, login, senha, email) && **Tela(Simples)** *Militar* (posto/graduação, nome de guerra) [As telas funcionam separados, é necessário junta-las];
 - [x] **Tela(Simples)** *Armamento* (nº de série, modelo, fabricante);
 - [x] **Tela(Simples)** *Acessórios* (descrição);
 - [x] **Tela(Simples)** *Munição* (calibre, descrição);
 - [x] **Tela(Simples)** *Reserva* (sigla, descrição);
-- [x] **Tela(Simples)** *Militar* (posto/graduação, nome de guerra);
 - [x] **Tela(Integração)** *ReservaMaterial* (cadastro de armamento, munição e acessórios com suas respectivas quantidades na reserva de armamento)
 - [x] **Tela(Integração)** *Cautela* (controle da retirada do armamento pelos militares, com: militar, armamentos e munições)
 - [ ] **Regra(Negócio)** Um militar da reserva de armamento cadastra todos os armamentos, munições e acessórios (lanterna, mascara de gás,coldre, bandoleira, etc) e em seguida (em Manter Reserva Material) informa quanto ele tem de cada equipamento na reserva.

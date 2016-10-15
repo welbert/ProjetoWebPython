@@ -4,27 +4,27 @@ from .models import Armamento,Reserva,Municao,Acessorio,Militar,Cautela_Acessori
 
 class CautelaAcessorioInline(admin.StackedInline):
     model = Cautela_Acessorio
-    extra = 1
+    extra = 0
 
 class CautelaMunicaoInline(admin.StackedInline):
     model = Cautela_Municao
-    extra = 1
+    extra = 0
 
 class CautelaArmamentoInline(admin.StackedInline):
     model = Cautela_Armamento
-    extra = 1
+    extra = 0
 
 class ReservaAcessorioInline(admin.StackedInline):
     model = Reserva_Acessorio
-    extra = 1
+    extra = 0
 
 class ReservaMunicaoInline(admin.StackedInline):
     model = Reserva_Municao
-    extra = 1
+    extra = 0
 
 class ReservaArmamentoInline(admin.StackedInline):
     model = Reserva_Armamento
-    extra = 1
+    extra = 0
 
 class ArmamentoAdmin(admin.ModelAdmin):
     fieldsets = [

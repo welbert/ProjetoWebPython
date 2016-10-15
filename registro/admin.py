@@ -56,6 +56,10 @@ class MilitarAdmin(admin.ModelAdmin):
     list_display = ('posto','nome_de_guerra')
     search_fields = ['posto','nome_de_guerra']
     list_filter = ['posto']
+    def get_readonly_fields(self, request, obj=None):
+        if obj: # editing an existing object
+            return self.readonly_fields + ('reserva','user')
+        return self.readonly_fields
     inlines = [CautelaAcessorioInline,CautelaMunicaoInline,CautelaArmamentoInline]
 
 

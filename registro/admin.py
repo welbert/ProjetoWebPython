@@ -52,7 +52,7 @@ class AcessorioAdmin(admin.ModelAdmin):
     search_fields = ['descricao']
 
 class MilitarAdmin(admin.ModelAdmin):
-    fields = ['posto','nome_de_guerra','reserva']
+    fields = ['posto','nome_de_guerra','reserva','user']
     list_display = ('posto','nome_de_guerra')
     search_fields = ['posto','nome_de_guerra']
     list_filter = ['posto']

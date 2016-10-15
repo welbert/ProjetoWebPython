@@ -69,5 +69,6 @@ class Militar(models.Model):
     posto = models.CharField('Posto',max_length=60)
     nome_de_guerra = models.CharField('Nome de Guerra',max_length=120)
     reserva = models.ForeignKey('Reserva',blank=True,null=True)
+    user = models.OneToOneField(User,blank=True,null=True)
     def __str__(self):
-        return "Posto: "+self.posto+" - Nome de Guerra: "+self.nome_de_guerra
+        return self.posto + " " +self.nome_de_guerra

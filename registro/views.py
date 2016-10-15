@@ -123,9 +123,21 @@ def shows_equip_reserva_num(request, equip_reserva_id):
 def cautelar_index(request):
 
     #militar = models.ForeignKey('Militar',blank=True,null=True)
+    militar_resp = Militar.objects.raw("SELECT * FROM registro_militar WHERE user_id = "+str(request.user.id))[0]
     militares = Militar.objects.raw('SELECT id, nome_de_guerra FROM registro_militar')
+    armamento = Armamento.objects.raw('SELECT id, (id||" - "||modelo||" - "||fabricante||" - "||numero_de_serie) as name FROM registro_armamento')
+    municao = Municao.objects.all()
+    acessorio = Acessorio.objects.all()
+
+
+    #return HttpResponse(armamento.name)
+
     context = {
         'militares': militares,
+        'militar_resp': militar_resp,
+        'armamento': armamento,
+        'municao': municao,
+        'acessorio': acessorio,
     }
 
     template = loader.get_template('registro/cautelar.html')

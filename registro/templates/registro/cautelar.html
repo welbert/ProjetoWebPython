@@ -8,67 +8,132 @@
 
 <h2 class="text-center">Cautelar</h2>
 
-<br><br>
+<br>
 
-<label class="col-md-6">
-  Reserva ID: <input type="text" name="reserva_id" disabled
-  value="{{ reserva_id }}" style="float: right; margin-top: -1%; width: 48%">
-</label>
+<form actio="{%url 'formularioCautela' %}" method="post" class="col-md-12" id="formulario-cautela">
+  {% csrf_token %}
+  <label class="col-md-6">
+    Reserva ID: <input type="text" name="reserva_id" disabled
+    value="{{ militar_resp.reserva_id }}" style="float: right; margin-top: -1%; width: 48%">
+  </label>
 
-<label class="col-md-6">
-  Militar Responsável: <select name="militar_respo" disabled style="
-  width: 48%;
-  height: 2em;
-  padding: 2px;
-  margin-top: -1%;
-  float: right;"
-  >
-    <option value="{{ militar_resp.id }}"> {{ militar_resp.nome }}</option>
-  </select>
-</label>
+  <label class="col-md-6">
+    Militar Responsável:<input type="text" name="militar_resp" disabled
+    value="{{ militar_resp.nome_de_guerra }}" style="float: right; margin-top: -1%; width: 48%">
+  </label>
 
-<br><br>
-<div class="clearfix"></div>
+  <br><br>
+  <div class="clearfix"></div>
 
-<label class="col-md-6">
-  Militar: <select class="selectpicker" name="militar_nome" data-live-search="true" required style="
-  width: 48%;
-  height: 2em;
-  padding: 2px;
-  margin-top: -1%;
-  float: right;
-  ">
-      <option value="null"> --------- </option>
-    {% for militar in militares %}
-      <option value="{{ militar.id }}"> {{ militar.nome_de_guerra }}</option>
-    {% endfor %}
-  </select>
-</label>
+  <label class="col-md-6">
+    Militar: <select class="selectpicker" name="militar_nome" data-live-search="true" required style="
+    width: 48%;
+    height: 2em;
+    padding: 2px;
+    margin-top: -1%;
+    float: right;
+    ">
+        <option value="null">  </option>
+      {% for militar in militares %}
+        <option value="{{ militar.id }}"> {{ militar.nome_de_guerra }}</option>
+      {% endfor %}
+    </select>
+  </label>
 
-<div class="clearfix"></div>
+  <div class="clearfix"></div>
 
-<label class="col-md-6">
-  Data de Retirada: <input type="text" name="data_retirada" class="datepicker"
-  required value="{{item.data_entrada | date:"d/m/Y" }}" style="float: right; margin-top: -1%; width: 48%">
-</label>
+  <label class="col-md-6">
+    Data de Retirada: <input type="text" name="data_retirada" class="datepicker"
+    required value="{{item.data_entrada | date:"d/m/Y" }}" style="float: right; margin-top: -1%; width: 48%">
+  </label>
 
-<label class="col-md-6">
-  Horário da Retirada: <input type="text" name="time" class="mask_time"
-  required value="{{item.data_time }}" style="float: right; margin-top: -1%; width:48%">
-</label>
+  <label class="col-md-6">
+    Horário da Retirada: <input type="text" name="time" class="time"
+    required value="{{item.time }}" style="float: right; margin-top: -1%; width:48%">
+  </label>
 
-<br><br>
+  <br><br>
 
-<label class="col-md-6">
-  Quantidade: <input type="number" name="quantidade" step="1" min="1" max="999"
-  required value="{{item.quantidade }}" style="float: right; margin-top: -1%; width:48%">
-</label>
+  <div class="clearfix"></div>
 
-<div class="clearfix"></div>
+  <h4 class="text-center" style="margin-left: 2%">Armamento</h4>
 
-<h4 style="margin-left: 2%">Armamento</h4>
-<h4 style="margin-left: 2%">Munição</h4>
-<h4 style="margin-left: 2%">Acessório</h4>
+  <label class="col-md-9">
+    Items: <select class="selectpicker" name="armamento_desc" data-live-search="true" required style="
+    width: 66.5%;
+    height: 2em;
+    padding: 2px;
+    margin-top: -1%;
+    float: right;
+    ">
+        <option value="">[ID - Fabricante - Modelo - N de Serie]</option>
+      {% for item in armamento %}
+        <option value="{{ item.id }}"> {{item.name}}</option>
+      {% endfor %}
+    </select>
+  </label>
+
+  <label class="col-md-3">
+    Quantidade: <input type="number" name="armamento_quantidade" step="1" min="1" max="999"
+    required value="{{item.quantidade }}" style="float: right; margin-top: -1%; ">
+  </label>
+
+  <br><br>
+  <div class="clearfix"></div>
+
+
+  <h4 class="text-center" style="margin-left: 2%">Munição</h4>
+
+  <label class="col-md-9">
+    Items: <select class="selectpicker" name="municao_desc" data-live-search="true" required style="
+    width: 66.5%;
+    height: 2em;
+    padding: 2px;
+    margin-top: -1%;
+    float: right;
+    ">
+        <option value="null">[ID - Calibre - Descricao] </option>
+      {% for item in municao %}
+        <option value="{{ item.id }}">{{item.id}} - {{ item.calibre}} - {{item.descricao}}</option>
+      {% endfor %}
+    </select>
+  </label>
+
+  <label class="col-md-3">
+    Quantidade: <input type="number" name="municao_quantidade" step="1" min="1" max="999"
+    required value="{{item.quantidade }}" style="float: right; margin-top: -1%; ">
+  </label>
+
+  <div class="clearfix"></div>
+
+
+
+  <h4 class="text-center" style="margin-left: 2%">Acessório</h4>
+
+  <label class="col-md-9">
+    Items: <select class="selectpicker" name="acessorio_desc" data-live-search="true" required style="
+    width: 66.5%;
+    height: 2em;
+    padding: 2px;
+    margin-top: -1%;
+    float: right;
+    ">
+        <option value=""> [ID - Descricao] </option>
+      {% for item in acessorio%}
+        <option value="{{ item.id }}"> {{item.id}} - {{ item.descricao}}</option>
+      {% endfor %}
+    </select>
+  </label>
+
+  <label class="col-md-3">
+    Quantidade: <input type="number" name="acessorio_quantidade" step="1" min="1" max="999"
+    required value="{{item.quantidade }}" style="float: right; margin-top: -1%; ">
+  </label>
+
+  <div class="clearfix"></div>
+
+  <button type="submit" class="btn btn-success"> Salvar </button>
+</form>
 
 {% endblock %}
 

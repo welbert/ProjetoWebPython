@@ -1,23 +1,24 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Armamento(models.Model):
     numero_de_serie = models.IntegerField('Numero de Serie',default=0)
     modelo = models.CharField('Modelo',max_length=200)
     fabricante = models.CharField('Fabricante',max_length=200)
     def __str__(self):
-        return "Numero de Serie: "+str(self.numero_de_serie)+" - Modelo: "+self.modelo+" - Fabricante: "+self.fabricante
+        return "Lote: "+str(self.id)+" - "+self.fabricante+"-"+self.modelo
 
 
 class Municao(models.Model):
     calibre = models.DecimalField('Calibre',max_digits=5, decimal_places=2)
     descricao = models.CharField('Descricao',max_length=250)
     def __str__(self):
-        return "Calibre: "+str(self.calibre)+" - Descricao: "+self.descricao
+        return "Lote: "+str(self.id)+" - "+self.descricao
 
 class Acessorio(models.Model):
     descricao = models.CharField('Descricao',max_length=250)
     def __str__(self):
-        return self.descricao
+        return "Lote: "+str(self.id)+" - "+self.descricao
 
 class Reserva_Armamento(models.Model):
     armamento = models.ForeignKey('Armamento')

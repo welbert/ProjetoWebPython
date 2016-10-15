@@ -6,7 +6,7 @@ class CautelaAcessorioInline(admin.StackedInline):
     model = Cautela_Acessorio
     extra = 0
     verbose_name = "Acessorio"
-    verbose_name_plural = "Acessorios"  
+    verbose_name_plural = "Acessorios"
 
 class CautelaMunicaoInline(admin.StackedInline):
     model = Cautela_Municao
@@ -51,7 +51,7 @@ class ReservaAdmin(admin.ModelAdmin):
     fields = ['sigla','descricao']
     list_display = ('sigla', 'descricao')
     search_fields = ['sigla','descricao']
-    inlines = [ReservaAcessorioInline,ReservaMunicaoInline,ReservaArmamentoInline]
+    #inlines = [ReservaAcessorioInline,ReservaMunicaoInline,ReservaArmamentoInline]
 
 class MunicaoAdmin(admin.ModelAdmin):
     fields = ['descricao','calibre']
@@ -72,7 +72,7 @@ class MilitarAdmin(admin.ModelAdmin):
         if obj: # editing an existing object
             return self.readonly_fields + ('reserva','user')
         return self.readonly_fields
-    inlines = [CautelaAcessorioInline,CautelaMunicaoInline,CautelaArmamentoInline]
+    #inlines = [CautelaAcessorioInline,CautelaMunicaoInline,CautelaArmamentoInline]
 
 
 admin.site.register(Armamento,ArmamentoAdmin)

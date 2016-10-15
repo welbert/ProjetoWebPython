@@ -51,7 +51,7 @@ class ReservaAdmin(admin.ModelAdmin):
     fields = ['sigla','descricao']
     list_display = ('sigla', 'descricao')
     search_fields = ['sigla','descricao']
-    #inlines = [ReservaAcessorioInline,ReservaMunicaoInline,ReservaArmamentoInline]
+    inlines = [ReservaAcessorioInline,ReservaMunicaoInline,ReservaArmamentoInline]
 
 class MunicaoAdmin(admin.ModelAdmin):
     fields = ['descricao','calibre']

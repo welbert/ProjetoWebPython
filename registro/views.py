@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.shortcuts import render, HttpResponse
-from .models import Armamento, Municao, Acessorio, Militar
+from .models import Armamento, Municao, Acessorio, Militar, Reserva
 from django.contrib.auth.decorators import login_required
 from django.template import loader
 
@@ -124,6 +124,7 @@ def cautelar_index(request):
 
     #militar = models.ForeignKey('Militar',blank=True,null=True)
     militar_resp = Militar.objects.raw("SELECT * FROM registro_militar WHERE user_id = "+str(request.user.id))[0]
+    reserva = Reserva.objects.all()
     militares = Militar.objects.raw('SELECT id, nome_de_guerra FROM registro_militar')
     armamento = Armamento.objects.raw('SELECT id, (id||" - "||modelo||" - "||fabricante||" - "||numero_de_serie) as name FROM registro_armamento')
     municao = Municao.objects.all()
@@ -135,6 +136,7 @@ def cautelar_index(request):
     context = {
         'militares': militares,
         'militar_resp': militar_resp,
+        'reserva': reserva,
         'armamento': armamento,
         'municao': municao,
         'acessorio': acessorio,

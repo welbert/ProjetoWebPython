@@ -13,12 +13,12 @@
 <form actio="{%url 'formularioCautela' %}" method="post" class="col-md-12" id="formulario-cautela">
   {% csrf_token %}
   <label class="col-md-6">
-    Reserva ID: <input type="text" name="reserva_id" disabled
+    Reserva ID: <input type="text" name="cautela_reserva_id" disabled
     value="{{ militar_resp.reserva_id }}" style="float: right; margin-top: -1%; width: 48%">
   </label>
 
   <label class="col-md-6">
-    Militar Responsável:<input type="text" name="militar_resp" disabled
+    Militar Responsável:<input type="text" name="cautela_militar_resp" disabled
     value="{{ militar_resp.nome_de_guerra }}" style="float: right; margin-top: -1%; width: 48%">
   </label>
 
@@ -26,7 +26,7 @@
   <div class="clearfix"></div>
 
   <label class="col-md-6">
-    Militar: <select class="selectpicker" name="militar_nome" data-live-search="true" required style="
+    Militar: <select class="selectpicker" name="cautela_militar_retirada" data-live-search="true" required style="
     width: 48%;
     height: 2em;
     padding: 2px;
@@ -43,12 +43,12 @@
   <div class="clearfix"></div>
 
   <label class="col-md-6">
-    Data de Retirada: <input type="text" name="data_retirada" class="datepicker"
+    Data de Retirada: <input type="text" name="cautela_data_retirada" class="datepicker"
     required value="{{item.data_entrada | date:"d/m/Y" }}" style="float: right; margin-top: -1%; width: 48%">
   </label>
 
   <label class="col-md-6">
-    Horário da Retirada: <input type="text" name="time" class="time"
+    Horário da Retirada: <input type="text" name="cautela_horario_retirada" class="time"
     required value="{{item.time }}" style="float: right; margin-top: -1%; width:48%">
   </label>
 
@@ -59,7 +59,7 @@
   <h4 class="text-center" style="margin-left: 2%">Armamento</h4>
 
   <label class="col-md-9">
-    Items: <select class="selectpicker" name="armamento_desc" data-live-search="true" required style="
+    Items: <select class="selectpicker" name="cautela_armamento_id" data-live-search="true" required style="
     width: 66.5%;
     height: 2em;
     padding: 2px;
@@ -74,7 +74,7 @@
   </label>
 
   <label class="col-md-3">
-    Quantidade: <input type="number" name="armamento_quantidade" step="1" min="1" max="999"
+    Quantidade: <input type="number" name="cautela_armamento_quantidade" step="1" min="1" max="999"
     required value="{{item.quantidade }}" style="float: right; margin-top: -1%; ">
   </label>
 
@@ -85,7 +85,7 @@
   <h4 class="text-center" style="margin-left: 2%">Munição</h4>
 
   <label class="col-md-9">
-    Items: <select class="selectpicker" name="municao_desc" data-live-search="true" required style="
+    Items: <select class="selectpicker" name="cautela_municao_id" data-live-search="true" required style="
     width: 66.5%;
     height: 2em;
     padding: 2px;
@@ -100,7 +100,7 @@
   </label>
 
   <label class="col-md-3">
-    Quantidade: <input type="number" name="municao_quantidade" step="1" min="1" max="999"
+    Quantidade: <input type="number" name="cautela_municao_quantidade" step="1" min="1" max="999"
     required value="{{item.quantidade }}" style="float: right; margin-top: -1%; ">
   </label>
 
@@ -111,7 +111,7 @@
   <h4 class="text-center" style="margin-left: 2%">Acessório</h4>
 
   <label class="col-md-9">
-    Items: <select class="selectpicker" name="acessorio_desc" data-live-search="true" required style="
+    Items: <select class="selectpicker" name="cautela_acessorio_id" data-live-search="true" required style="
     width: 66.5%;
     height: 2em;
     padding: 2px;
@@ -126,7 +126,7 @@
   </label>
 
   <label class="col-md-3">
-    Quantidade: <input type="number" name="acessorio_quantidade" step="1" min="1" max="999"
+    Quantidade: <input type="number" name="cautela_acessorio_quantidade" step="1" min="1" max="999"
     required value="{{item.quantidade }}" style="float: right; margin-top: -1%; ">
   </label>
 

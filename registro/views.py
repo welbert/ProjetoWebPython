@@ -145,4 +145,7 @@ def cautelar_index(request):
 
 def formularioCautela(request):
     post = request.POST
+    cautela_armamento = Cautela_Armamento()
+    cautela_municao = Cautela_Armamento()
+    cautela_acessorio = Cautela_Acessorio()
 

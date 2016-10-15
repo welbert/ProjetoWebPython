@@ -70,6 +70,12 @@ class Cautela_Acessorio(models.Model):
     def __str__(self):
         return str(self.data_de_retirada)
 
+class Cautela_Militar(models.Model):
+    militar = models.ForeignKey('Militar', related_name='militar')
+    militar_resp = models.ForeignKey('Militar', related_name='militar_resp')
+    def __str__(self):
+        return str(self.militar+ " " +self.militar_resp)
+
 class Militar(models.Model):
     posto = models.CharField('Posto',max_length=60)
     nome_de_guerra = models.CharField('Nome de Guerra',max_length=120)

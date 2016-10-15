@@ -46,6 +46,10 @@ class ArmamentoAdmin(admin.ModelAdmin):
     list_display = ('numero_de_serie', 'modelo','fabricante')
     list_filter = ['numero_de_serie', 'modelo','fabricante']
     search_fields = ['modelo','fabricante']
+    def get_model_perms(self, request):
+        """
+        """
+        return {}
 
 class ReservaAdmin(admin.ModelAdmin):
     fields = ['sigla','descricao']
@@ -62,10 +66,18 @@ class MunicaoAdmin(admin.ModelAdmin):
     list_display = ('descricao','calibre')
     list_filter = ['calibre']
     search_fields = ['descricao','calibre']
+    def get_model_perms(self, request):
+        """
+        """
+        return {}
 
 class AcessorioAdmin(admin.ModelAdmin):
     fields = ['descricao']
     search_fields = ['descricao']
+    def get_model_perms(self, request):
+        """
+        """
+        return {}
 
 class MilitarAdmin(admin.ModelAdmin):
     fields = ['posto','nome_de_guerra','reserva','user']
@@ -79,8 +91,8 @@ class MilitarAdmin(admin.ModelAdmin):
     #inlines = [CautelaAcessorioInline,CautelaMunicaoInline,CautelaArmamentoInline]
 
 
-#admin.site.register(Armamento,ArmamentoAdmin)
+admin.site.register(Armamento,ArmamentoAdmin)
 admin.site.register(Reserva,ReservaAdmin)
-#admin.site.register(Municao,MunicaoAdmin)
-#admin.site.register(Acessorio,AcessorioAdmin)
+admin.site.register(Municao,MunicaoAdmin)
+admin.site.register(Acessorio,AcessorioAdmin)
 admin.site.register(Militar,MilitarAdmin)

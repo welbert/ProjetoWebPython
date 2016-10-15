@@ -5,26 +5,38 @@ from .models import Armamento,Reserva,Municao,Acessorio,Militar,Cautela_Acessori
 class CautelaAcessorioInline(admin.StackedInline):
     model = Cautela_Acessorio
     extra = 0
+    verbose_name = "Acessorio"
+    verbose_name_plural = "Acessorios"  
 
 class CautelaMunicaoInline(admin.StackedInline):
     model = Cautela_Municao
     extra = 0
+    verbose_name = "Municao"
+    verbose_name_plural = "Municoes"
 
 class CautelaArmamentoInline(admin.StackedInline):
     model = Cautela_Armamento
     extra = 0
+    verbose_name = "Armamento"
+    verbose_name_plural = "Armamentos"
 
 class ReservaAcessorioInline(admin.StackedInline):
     model = Reserva_Acessorio
     extra = 0
+    verbose_name = "Acessorio"
+    verbose_name_plural = "Acessorios"
 
 class ReservaMunicaoInline(admin.StackedInline):
     model = Reserva_Municao
     extra = 0
+    verbose_name = "Municao"
+    verbose_name_plural = "Municoes"
 
 class ReservaArmamentoInline(admin.StackedInline):
     model = Reserva_Armamento
     extra = 0
+    verbose_name = "Armamento"
+    verbose_name_plural = "Armamentos"
 
 class ArmamentoAdmin(admin.ModelAdmin):
     fieldsets = [

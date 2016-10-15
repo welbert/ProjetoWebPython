@@ -12,6 +12,8 @@ class Armamento(models.Model):
 class Municao(models.Model):
     calibre = models.DecimalField('Calibre',max_digits=5, decimal_places=2)
     descricao = models.CharField('Descricao',max_length=250)
+    class Meta:
+        verbose_name_plural = "Municoes"
     def __str__(self):
         return "Id: "+str(self.id)+" - "+self.descricao
 
@@ -70,5 +72,7 @@ class Militar(models.Model):
     nome_de_guerra = models.CharField('Nome de Guerra',max_length=120)
     reserva = models.ForeignKey('Reserva',blank=True,null=True)
     user = models.OneToOneField(User,blank=True,null=True)
+    class Meta:
+        verbose_name_plural = "Militares"
     def __str__(self):
         return self.posto + " " +self.nome_de_guerra

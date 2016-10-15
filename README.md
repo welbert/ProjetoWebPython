@@ -37,7 +37,7 @@ Pass: virtualbox
   - [x] Capa
   - [ ] Contracapa com tema, equipe, dados da disciplina e demais informações pertinentes ao tema.
   - [x] Diagrama de Classes 
-  - [ ] Entidade e Relacionamento `TODO: Relacionar user com militar`
+  - [x] Entidade e Relacionamento
 - [ ] Slides
 - [x] *Login/Logout*
 - [x] *Menu de opções*

@@ -6,6 +6,30 @@
 
 {% block content %}
 
+<h2 class="text-center">Cautelar</h2>
+
+<br><br>
+
+<label class="col-md-6">
+  Reserva ID: <input type="text" name="reserva_id" disabled
+  value="{{ reserva_id }}" style="float: right; margin-top: -1%; width: 48%">
+</label>
+
+<label class="col-md-6">
+  Militar Responsável: <select name="militar_respo" disabled style="
+  width: 48%;
+  height: 2em;
+  padding: 2px;
+  margin-top: -1%;
+  float: right;"
+  >
+    <option value="{{ militar_resp.id }}"> {{ militar_resp.nome }}</option>
+  </select>
+</label>
+
+<br><br>
+<div class="clearfix"></div>
+
 <label class="col-md-6">
   Militar: <select class="selectpicker" name="militar_nome" data-live-search="true" required style="
   width: 48%;
@@ -14,6 +38,7 @@
   margin-top: -1%;
   float: right;
   ">
+      <option value="null"> --------- </option>
     {% for militar in militares %}
       <option value="{{ militar.id }}"> {{ militar.nome_de_guerra }}</option>
     {% endfor %}
@@ -24,14 +49,26 @@
 
 <label class="col-md-6">
   Data de Retirada: <input type="text" name="data_retirada" class="datepicker"
-  required value="{{item.data_entrada | date:"d/m/Y" }}" style="float: right; margin-top: -1%;">
+  required value="{{item.data_entrada | date:"d/m/Y" }}" style="float: right; margin-top: -1%; width: 48%">
 </label>
 
 <label class="col-md-6">
-  Quantidade: <input type="number" name="quantidade" step="1"
-  required value="{{item.quantidade }}" style="float: right; margin-top: -1%">
+  Horário da Retirada: <input type="text" name="time" class="mask_time"
+  required value="{{item.data_time }}" style="float: right; margin-top: -1%; width:48%">
 </label>
 
-{% endblock %}
+<br><br>
 
+<label class="col-md-6">
+  Quantidade: <input type="number" name="quantidade" step="1" min="1" max="999"
+  required value="{{item.quantidade }}" style="float: right; margin-top: -1%; width:48%">
+</label>
+
+<div class="clearfix"></div>
+
+<h4 style="margin-left: 2%">Armamento</h4>
+<h4 style="margin-left: 2%">Munição</h4>
+<h4 style="margin-left: 2%">Acessório</h4>
+
+{% endblock %}
 

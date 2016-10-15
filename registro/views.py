@@ -130,3 +130,7 @@ def cautelar_index(request):
 
     template = loader.get_template('registro/cautelar.html')
     return HttpResponse(template.render(context, request))
+
+def formularioCautela(request):
+    post = request.POST
+

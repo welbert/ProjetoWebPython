@@ -63,7 +63,7 @@
             <td>{{ item.calibre}}</td>
             <td>{{ item.descricao}}</td>
             <td>
-                <a href="{% url 'index' %}"><button class="btn btn-success">Editar</button></a>
+                <a href="/admin/registro/municao/{{item.id}}/change"><button class="btn btn-success">Editar</button></a>
             </td>
         </tr>
     {% endfor %}
@@ -88,7 +88,7 @@
             <td>{{ item.id}}</td>
             <td>{{ item.descricao}}</td>
             <td>
-                <a href="{% url 'index' %}"><button class="btn btn-success">Editar</button></a>
+                <a href="/admin/registro/acessorio/{{item.id}}/change"><button class="btn btn-success">Editar</button></a>
             </td>
         </tr>
     {% endfor %}

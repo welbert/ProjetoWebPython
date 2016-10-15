@@ -6,19 +6,19 @@ class Armamento(models.Model):
     modelo = models.CharField('Modelo',max_length=200)
     fabricante = models.CharField('Fabricante',max_length=200)
     def __str__(self):
-        return "Lote: "+str(self.id)+" - "+self.fabricante+"-"+self.modelo
+        return "Id: "+str(self.id)+" - "+self.fabricante+"-"+self.modelo
 
 
 class Municao(models.Model):
     calibre = models.DecimalField('Calibre',max_digits=5, decimal_places=2)
     descricao = models.CharField('Descricao',max_length=250)
     def __str__(self):
-        return "Lote: "+str(self.id)+" - "+self.descricao
+        return "Id: "+str(self.id)+" - "+self.descricao
 
 class Acessorio(models.Model):
     descricao = models.CharField('Descricao',max_length=250)
     def __str__(self):
-        return "Lote: "+str(self.id)+" - "+self.descricao
+        return "Id: "+str(self.id)+" - "+self.descricao
 
 class Reserva_Armamento(models.Model):
     armamento = models.ForeignKey('Armamento')

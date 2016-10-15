@@ -51,6 +51,10 @@ class ReservaAdmin(admin.ModelAdmin):
     fields = ['sigla','descricao']
     list_display = ('sigla', 'descricao')
     search_fields = ['sigla','descricao']
+    def get_readonly_fields(self, request, obj=None):
+        if obj: # editing an existing object
+            return self.readonly_fields + ('sigla',)
+        return self.readonly_fields
     inlines = [ReservaAcessorioInline,ReservaMunicaoInline,ReservaArmamentoInline]
 
 class MunicaoAdmin(admin.ModelAdmin):
@@ -75,8 +79,8 @@ class MilitarAdmin(admin.ModelAdmin):
     #inlines = [CautelaAcessorioInline,CautelaMunicaoInline,CautelaArmamentoInline]
 
 
-admin.site.register(Armamento,ArmamentoAdmin)
+#admin.site.register(Armamento,ArmamentoAdmin)
 admin.site.register(Reserva,ReservaAdmin)
-admin.site.register(Municao,MunicaoAdmin)
-admin.site.register(Acessorio,AcessorioAdmin)
+#admin.site.register(Municao,MunicaoAdmin)
+#admin.site.register(Acessorio,AcessorioAdmin)
 admin.site.register(Militar,MilitarAdmin)

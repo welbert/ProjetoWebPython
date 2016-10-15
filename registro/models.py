@@ -40,6 +40,9 @@ class Reserva_Acessorio(models.Model):
 class Reserva(models.Model):
     sigla = models.CharField('Sigla',max_length=5)
     descricao = models.CharField('Descricao',max_length=250)
+    class Meta:
+        verbose_name_plural = "Reservas de Materiais"
+        verbose_name = "Reservas de Material"
     def __str__(self):
         return self.sigla
 

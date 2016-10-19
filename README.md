@@ -32,16 +32,16 @@ Pass: virtualbox
 
 > # TODO
 
-- [ ] Cronograma
-- [ ] Material Escrito
+- [x] Cronograma
+- [x] Material Escrito
   - [x] Capa
-  - [ ] Contracapa com tema, equipe, dados da disciplina e demais informações pertinentes ao tema.
+  - [x] Contracapa com tema, equipe, dados da disciplina e demais informações pertinentes ao tema.
   - [x] Diagrama de Classes 
   - [x] Entidade e Relacionamento
 - [ ] Slides
 - [x] *Login/Logout*
 - [x] *Menu de opções*
-- [ ] **Tela(Simples)** *Usuário* (nome completo, login, senha, email) && **Tela(Simples)** *Militar* (posto/graduação, nome de guerra) [As telas funcionam separados, é necessário junta-las];
+- [x] **Tela(Simples)** *Usuário* (nome completo, login, senha, email) && **Tela(Simples)** *Militar* (posto/graduação, nome de guerra);
 - [x] **Tela(Simples)** *Armamento* (nº de série, modelo, fabricante);
 - [x] **Tela(Simples)** *Acessórios* (descrição);
 - [x] **Tela(Simples)** *Munição* (calibre, descrição);

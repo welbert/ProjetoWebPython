@@ -18,6 +18,14 @@
 
 {% if save %}
   <h1>{{save}}</h1>
+{% if count %}
+  <h3>
+  Militar possui em cautela:<br><br>
+   {{count_armamento}} Armamentos, <br>
+   {{count_municao}} Munições, <br>
+   {{count_acessorio}} Acessórios, <br>
+  </h3>
+{% endif %}
 {% else %}
 
 <h2 class="text-center">Cautelar</h2>

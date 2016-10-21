@@ -205,7 +205,6 @@ def formularioCautela(request):
     save = None
 
     post = request.POST
-    #return HttpResponse(post.get('cautela_armamento_id', ''))
 
     #foreign Models
     militar_cautela = Militar.objects.get(pk=post.get('cautela_militar_cautela', ''))
@@ -291,21 +290,41 @@ def formularioCautela(request):
         #nenhum save foi setado até o momento. Logo não foi informado item ou quantidade
         save = 2
 
+#    transaction.savepoint_rollback(sid)
     transaction.savepoint_commit(sid)
     transaction.atomic()
+
     template = loader.get_template('registro/cautelar.html')
 
     #Gera mensagem de tratamento e redireciona pra pagina template de cautelas
+    context = {}
+
     if( save == 0):
         save = "Erro: Quantidade maior que o disponível na reserva"
     elif( save == 2 ):
         save = "Nenhum item foi selecionado ou quantidade não informada"
     else:
         save = "Cautela realizada com sucesso"
+        count_armamento = Cautela_Armamento.objects.raw("\
+                SELECT id, COUNT(*) count FROM registro_cautela_armamento WHERE militar_id = "+str(post.get('cautela_militar_cautela', ''))+"\
+        ")
+        count_municao = Cautela_Municao.objects.raw("\
+                SELECT id, COUNT(*) count FROM registro_cautela_municao WHERE militar_id = "+str(post.get('cautela_militar_cautela', ''))+"\
+        ")
+        count_acessorio = Cautela_Acessorio.objects.raw("\
+                SELECT id, COUNT(*) count FROM registro_cautela_acessorio WHERE militar_id = "+str(post.get('cautela_militar_cautela', ''))+"\
+        ")
 
-    context = {
-        'save': save,
-    }
+        context = {
+            'count': 1,
+            'count_armamento' : count_armamento[0].count,
+            'count_municao' : count_municao[0].count,
+            'count_acessorio' : count_acessorio[0].count,
+        }
+
+#        return HttpResponse(count_armamento[0].count)
+
+    context['save'] = save
 
     #return HtppResponseRedirect('/p_registro/cautelas')
     return HttpResponse(template.render(context, request))

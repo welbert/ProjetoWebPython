@@ -126,6 +126,44 @@ def shows_equip_reserva_num(request, equip_reserva_id):
 
 
 @login_required(login_url="../admin/login/")
+def cautelar_listar(request):
+    #return HttpResponse( "This is a test index" );
+    template = loader.get_template('registro/listar_cautelas.html')
+
+    armamento_list = Cautela_Armamento.objects.raw('\
+        SELECT caut_arm.id, (arm.modelo||" - "||arm.numero_de_serie) as descricao, caut_arm.quantidade, mili.nome_de_guerra, caut_arm.data_de_retirada FROM registro_cautela_armamento caut_arm\
+        JOIN registro_armamento arm ON arm.id = caut_arm.armamento_id\
+        JOIN registro_militar mili ON mili.id = caut_arm.militar_id\
+    ')
+
+    municao_list = Cautela_Municao.objects.raw('\
+        SELECT caut_muni.id, muni.descricao, caut_muni.quantidade, mili.nome_de_guerra, caut_muni.data_de_retirada FROM registro_cautela_municao caut_muni\
+        JOIN registro_municao muni ON muni.id = caut_muni.municao_id\
+        JOIN registro_militar mili ON mili.id = caut_muni.militar_id\
+    ')
+
+    acessorio_list= Cautela_Acessorio.objects.raw('\
+        SELECT caut_acess.id, acess.descricao, caut_acess.quantidade, mili.nome_de_guerra, caut_acess.data_de_retirada FROM registro_cautela_acessorio caut_acess\
+        JOIN registro_acessorio acess ON acess.id = caut_acess.acessorio_id\
+        JOIN registro_militar mili ON mili.id = caut_acess.militar_id\
+    ')
+
+    armamento_count = Cautela_Armamento.objects.count()
+    municao_count= Cautela_Municao.objects.count()
+    acessorio_count= Cautela_Acessorio.objects.count()
+
+    context = {
+        'armamento_list': armamento_list,
+        'armamento_count': armamento_count,
+        'municao_list': municao_list,
+        'municao_count': municao_count,
+        'acessorio_list': acessorio_list,
+        'acessorio_count': acessorio_count
+    }
+    return HttpResponse(template.render(context, request))
+
+
+@login_required(login_url="../admin/login/")
 def cautelar_index(request):
 
     #militar = models.ForeignKey('Militar',blank=True,null=True)

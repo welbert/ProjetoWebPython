@@ -8,7 +8,6 @@ class Armamento(models.Model):
     def __str__(self):
         return "Id: "+str(self.id)+" - "+self.fabricante+"-"+self.modelo
 
-
 class Municao(models.Model):
     calibre = models.DecimalField('Calibre',max_digits=5, decimal_places=2)
     descricao = models.CharField('Descricao',max_length=250)

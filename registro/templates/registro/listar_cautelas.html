@@ -1,0 +1,115 @@
+{% extends 'base/layout.html' %}
+
+{% block title %}Equipamentos{% endblock %}
+
+{% block content %}
+
+<div class="header clearfix">
+    <nav>
+      <ul class="nav nav-pills" style=" margin-left: 31%;">
+        <li role="presentation" ><a href="{% url 'listar_cautelas' %}">Listar Cautelas</a></li>
+        <li role="presentation" ><a href="{% url 'cautelas' %}">Cautelar</a></li>
+        <li role="presentation" ><a href="{% url 'listar_cautelas' %}">Histórico de Devoluções</a></li>
+      </ul>
+    </nav>
+</div>
+
+{% if armamento_list %}
+<h2>Cautela de Armamentos</h2>
+<table class="table table-bordered table-responsive">
+<thead>
+<tr>
+    <td>Id</td>
+    <td>Descrição do item</td>
+    <td>Quantidade</td>
+    <td>Militar</td>
+    <td>Data de Entrada</td>
+    <td>Ações</td>
+</tr>
+</thead>
+<tbody>
+    {% for item in armamento_list %}
+        <tr>
+            <td>{{ item.id}}</td>
+            <td>{{ item.descricao}}</td>
+            <td>{{ item.quantidade}}</td>
+            <td>{{ item.nome_de_guerra}}</td>
+            <td>{{ item.data_de_retirada}}</td>
+            <td>
+                <a href=""><button class="btn btn-success">Devolver</button></a>
+            <!--    <a href="{% url 'index' %}" onclick="return confirm('Deseja Excluir?')"><button class="btn btn-danger">Excluir!</button></a>-->
+            </td>
+        </tr>
+    {% endfor %}
+</tbody>
+</table>
+<h5>Total: {{ armamento_count }}</h5>
+{% endif %}
+
+{% if municao_list %}
+<h2>Cautela de Munições</h2>
+<table class="table table-bordered table-responsive">
+<thead>
+<tr>
+    <td>Id</td>
+    <td>Descrição do item</td>
+    <td>Quantidade</td>
+    <td>Militar</td>
+    <td>Data de Entrada</td>
+    <td>Ações</td>
+</tr>
+</thead>
+<tbody>
+    {% for item in municao_list %}
+        <tr>
+            <td>{{ item.id}}</td>
+            <td>{{ item.descricao}}</td>
+            <td>{{ item.quantidade}}</td>
+            <td>{{ item.nome_de_guerra}}</td>
+            <td>{{ item.data_de_retirada}}</td>
+            <td>
+                <a href=""><button class="btn btn-success">Devolver</button></a>
+            <!--    <a href="{% url 'index' %}" onclick="return confirm('Deseja Excluir?')"><button class="btn btn-danger">Excluir!</button></a>-->
+            </td>
+        </tr>
+    {% endfor %}
+</tbody>
+</table>
+<h5>Total: {{ municao_count }}</h5>
+{% endif %}
+
+{% if acessorio_list %}
+
+<h2>Cautela de Acessórios</h2>
+
+<table class="table table-bordered table-responsive">
+<thead>
+<tr>
+    <td>Id</td>
+    <td>Descrição do item</td>
+    <td>Quantidade</td>
+    <td>Militar</td>
+    <td>Data de Entrada</td>
+    <td>Ações</td>
+</tr>
+</thead>
+<tbody>
+    {% for item in acessorio_list %}
+        <tr>
+            <td>{{ item.id}}</td>
+            <td>{{ item.descricao}}</td>
+            <td>{{ item.quantidade}}</td>
+            <td>{{ item.nome_de_guerra}}</td>
+            <td>{{ item.data_de_retirada}}</td>
+            <td>
+                <a href=""><button class="btn btn-success">Devolver</button></a>
+            <!--    <a href="{% url 'index' %}" onclick="return confirm('Deseja Excluir?')"><button class="btn btn-danger">Excluir!</button></a>-->
+            </td>
+        </tr>
+    {% endfor %}
+</tbody>
+</table>
+<h5>Total: {{ acessorio_count }}</h5>
+{% endif %}
+
+{% endblock %}

@@ -202,6 +202,7 @@ def cautelar_index(request):
 def formularioCautela(request):
     #salva ponto para possível rollback later
     sid = transaction.savepoint()
+    save = None
 
     post = request.POST
     #return HttpResponse(post.get('cautela_armamento_id', ''))
@@ -230,6 +231,7 @@ def formularioCautela(request):
                 reserva_armamento.quantidade = int(reserva_armamento.quantidade) - int(post.get('cautela_armamento_quantidade', ''))
                 reserva_armamento.save()
                 cautela_armamento.save()
+                save = 1
             else:
                 save = 0
 
@@ -252,6 +254,7 @@ def formularioCautela(request):
                 reserva_municao.quantidade = int(reserva_municao.quantidade) - int(post.get('cautela_municao_quantidade', ''))
                 reserva_municao.save()
                 cautela_municao.save()
+                save = 1
             else:
                 save = 0
 
@@ -274,21 +277,29 @@ def formularioCautela(request):
                 reserva_acessorio.quantidade = int(reserva_acessorio.quantidade) - int(post.get('cautela_acessorio_quantidade', ''))
                 reserva_acessorio.save()
                 cautela_acessorio.save()
+                save = 1
             else:
                 save = 0
 
-    cautela_militar = Cautela_Militar()
-    cautela_militar.militar = militar_cautela
-    cautela_militar.militar_resp = militar_resp
-    cautela_militar.save()
+    #verifica se foi feito algum save, se não mitiga o erro
+    if( save == 1 ):
+        cautela_militar = Cautela_Militar()
+        cautela_militar.militar = militar_cautela
+        cautela_militar.militar_resp = militar_resp
+        cautela_militar.save()
+    elif(save == None):
+        #nenhum save foi setado até o momento. Logo não foi informado item ou quantidade
+        save = 2
 
     transaction.savepoint_commit(sid)
     transaction.atomic()
     template = loader.get_template('registro/cautelar.html')
 
     #Gera mensagem de tratamento e redireciona pra pagina template de cautelas
-    if( 'save' in locals() and save == 0):
+    if( save == 0):
         save = "Erro: Quantidade maior que o disponível na reserva"
+    elif( save == 2 ):
+        save = "Nenhum item foi selecionado ou quantidade não informada"
     else:
         save = "Cautela realizada com sucesso"
 

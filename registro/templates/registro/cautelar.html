@@ -11,7 +11,7 @@
       <ul class="nav nav-pills" style=" margin-left: 31%;">
         <li role="presentation" ><a href="{% url 'listar_cautelas' %}">Listar Cautelas</a></li>
         <li role="presentation" ><a href="{% url 'cautelas' %}">Cautelar</a></li>
-        <li role="presentation" ><a href="{% url 'listar_cautelas' %}">Histórico de Devoluções</a></li>
+<!--        <li role="presentation" ><a href="{% url 'listar_cautelas' %}">Histórico de Devoluções</a></li> -->
       </ul>
     </nav>
 </div>
@@ -21,9 +21,9 @@
 {% if count %}
   <h3>
   Militar possui em cautela:<br><br>
-   {{count_armamento}} Armamentos, <br>
-   {{count_municao}} Munições, <br>
-   {{count_acessorio}} Acessórios, <br>
+   {{count_armamento}} Armamento(s) <br>
+   {{count_municao}} Munição(ões) <br>
+   {{count_acessorio}} Acessório(s) <br>
   </h3>
 {% endif %}
 {% else %}

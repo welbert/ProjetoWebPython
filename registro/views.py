@@ -131,20 +131,23 @@ def cautelar_listar(request):
     template = loader.get_template('registro/listar_cautelas.html')
 
     armamento_list = Cautela_Armamento.objects.raw('\
-        SELECT caut_arm.id, (arm.modelo||" - "||arm.numero_de_serie) as descricao, caut_arm.quantidade, mili.nome_de_guerra, caut_arm.data_de_retirada FROM registro_cautela_armamento caut_arm\
-        JOIN registro_armamento arm ON arm.id = caut_arm.armamento_id\
+        SELECT caut_arm.id, (arm.modelo||" - "||arm.numero_de_serie) descricao, caut_arm.quantidade, mili.nome_de_guerra, caut_arm.data_de_retirada FROM registro_cautela_armamento caut_arm\
+        JOIN registro_reserva_armamento r_arm ON r_arm.id = caut_arm.reserva_armamento_id\
+        JOIN registro_armamento arm ON arm.id = r_arm.armamento_id\
         JOIN registro_militar mili ON mili.id = caut_arm.militar_id\
     ')
 
     municao_list = Cautela_Municao.objects.raw('\
         SELECT caut_muni.id, muni.descricao, caut_muni.quantidade, mili.nome_de_guerra, caut_muni.data_de_retirada FROM registro_cautela_municao caut_muni\
-        JOIN registro_municao muni ON muni.id = caut_muni.municao_id\
+        JOIN registro_reserva_municao r_muni ON r_muni.id = caut_muni.reserva_municao_id\
+        JOIN registro_municao muni ON muni.id = r_muni.municao_id\
         JOIN registro_militar mili ON mili.id = caut_muni.militar_id\
     ')
 
     acessorio_list= Cautela_Acessorio.objects.raw('\
         SELECT caut_acess.id, acess.descricao, caut_acess.quantidade, mili.nome_de_guerra, caut_acess.data_de_retirada FROM registro_cautela_acessorio caut_acess\
-        JOIN registro_acessorio acess ON acess.id = caut_acess.acessorio_id\
+        JOIN registro_reserva_acessorio r_acess ON r_acess.id = caut_acess.reserva_acessorio_id\
+        JOIN registro_acessorio acess ON acess.id = r_acess.acessorio_id\
         JOIN registro_militar mili ON mili.id = caut_acess.militar_id\
     ')
 
@@ -171,16 +174,16 @@ def cautelar_index(request):
     #reserva = Reserva.objects.all()
     militares = Militar.objects.raw('SELECT id, nome_de_guerra FROM registro_militar')
     armamento = Armamento.objects.raw(
-        'SELECT RA.id, (modelo||" - "||fabricante||" - "||numero_de_serie) as name, RRA.reserva_id, RR.sigla FROM registro_armamento RA \
+        'SELECT RRA.id, (modelo||" - "||fabricante||" - "||numero_de_serie) as name, RRA.reserva_id, RR.sigla FROM registro_armamento RA \
         JOIN registro_reserva_armamento RRA ON RA.id = RRA.armamento_id and RRA.quantidade > 0\
         JOIN registro_reserva RR ON RRA.reserva_id = RR.id'
     )
-    municao = Municao.objects.raw('SELECT RM.id, RM.calibre, RM.descricao, RRM.reserva_id, RR.sigla FROM registro_municao RM\
+    municao = Municao.objects.raw('SELECT RRM.id, RM.calibre, RM.descricao, RRM.reserva_id, RR.sigla FROM registro_municao RM\
             JOIN registro_reserva_municao RRM ON RRM.municao_id = RM.id and RRM.quantidade > 0\
             JOIN registro_reserva RR ON RRM.reserva_id = RR.id')
     #municao = Municao.objects.all()
 
-    acessorio = Acessorio.objects.raw('SELECT RAc.id, RAc.descricao, RRAc.reserva_id, RR.sigla FROM registro_acessorio RAc\
+    acessorio = Acessorio.objects.raw('SELECT RRAc.id, RAc.descricao, RRAc.reserva_id, RR.sigla FROM registro_acessorio RAc\
         JOIN registro_reserva_acessorio RRAc ON RRAc.acessorio_id = RAc.id and RRAc.quantidade > 0\
         JOIN registro_reserva RR ON RRAc.reserva_id = RR.id')
 
@@ -198,6 +201,7 @@ def cautelar_index(request):
     return HttpResponse(template.render(context, request))
 
 
+@login_required(login_url="../admin/login/")
 @transaction.atomic
 def formularioCautela(request):
     #salva ponto para possível rollback later
@@ -210,75 +214,56 @@ def formularioCautela(request):
     militar_cautela = Militar.objects.get(pk=post.get('cautela_militar_cautela', ''))
     militar_resp = Militar.objects.get(pk=post.get('cautela_militar_resp_id', ''))
 
-    reserva_arma_raw = None
     if post.get('cautela_armamento_id', '') != '' and int(post.get('cautela_armamento_quantidade', '')) > 0:
-        armamento = Armamento.objects.get(pk=post.get('cautela_armamento_id', ''))
+        reserva_armamento = Reserva_Armamento.objects.get(pk=post.get('cautela_armamento_id', ''))
 
         cautela_armamento = Cautela_Armamento()
         cautela_armamento.data_de_retirada = post.get('cautela_data_retirada', '') +' '+ post.get('cautela_horario_retirada', '')
         cautela_armamento.militar = militar_cautela
-        cautela_armamento.armamento = armamento
+        cautela_armamento.reserva_armamento = reserva_armamento
         cautela_armamento.quantidade = int(post.get('cautela_armamento_quantidade', ''))
 
-        reserva_arma_raw = Reserva.objects.raw("SELECT id FROM registro_reserva_armamento WHERE armamento_id = "+str(post.get('cautela_armamento_id', '')))
+        if(int(reserva_armamento.quantidade) >= int(cautela_armamento.quantidade)):
+            reserva_armamento.quantidade = int(reserva_armamento.quantidade) - int(post.get('cautela_armamento_quantidade', ''))
+            reserva_armamento.save()
+            cautela_armamento.save()
+            save = 1
+        else:
+            save = 0
 
-        if list(reserva_arma_raw):
-            r_reserva_arma = reserva_arma_raw[0]
-            reserva_armamento = Reserva_Armamento.objects.get(pk=r_reserva_arma.id)
-
-            if(int(reserva_armamento.quantidade) >= int(cautela_armamento.quantidade)):
-                reserva_armamento.quantidade = int(reserva_armamento.quantidade) - int(post.get('cautela_armamento_quantidade', ''))
-                reserva_armamento.save()
-                cautela_armamento.save()
-                save = 1
-            else:
-                save = 0
-
-    reserva_muni_raw = None
     if post.get('cautela_municao_id','') != '' and int(post.get('cautela_municao_quantidade', '')) > 0:
-        municao = Municao.objects.get(pk=post.get('cautela_municao_id', ''))
+        reserva_municao = Reserva_Municao.objects.get(pk=post.get('cautela_municao_id', ''))
 
         cautela_municao = Cautela_Municao()
         cautela_municao.data_de_retirada = post.get('cautela_data_retirada', '') + ' '+post.get('cautela_horario_retirada', '')
         cautela_municao.militar = militar_cautela
-        cautela_municao.municao = municao
+        cautela_municao.reserva_municao = reserva_municao
         cautela_municao.quantidade = post.get('cautela_municao_quantidade', '')
 
-        reserva_muni_raw = Reserva.objects.raw("SELECT id FROM registro_reserva_municao WHERE municao_id ="+str(post.get('cautela_municao_id', '')))
-        if list(reserva_muni_raw):
-            r_reserva_muni = reserva_muni_raw[0]
-            reserva_municao = Reserva_Municao.objects.get(pk=r_reserva_muni.id)
+        if(int(reserva_municao.quantidade) >= int(cautela_municao.quantidade)):
+            reserva_municao.quantidade = int(reserva_municao.quantidade) - int(post.get('cautela_municao_quantidade', ''))
+            reserva_municao.save()
+            cautela_municao.save()
+            save = 1
+        else:
+            save = 0
 
-            if(int(reserva_municao.quantidade) >= int(cautela_municao.quantidade)):
-                reserva_municao.quantidade = int(reserva_municao.quantidade) - int(post.get('cautela_municao_quantidade', ''))
-                reserva_municao.save()
-                cautela_municao.save()
-                save = 1
-            else:
-                save = 0
-
-    reserva_acesso_raw = None
     if post.get('cautela_acessorio_id','') != '' and int(post.get('cautela_acessorio_quantidade', '')) > 0:
-        acessorio = Acessorio.objects.get(pk=post.get('cautela_acessorio_id', ''))
+        reserva_acessorio = Reserva_Acessorio.objects.get(pk=post.get('cautela_acessorio_id', ''))
 
         cautela_acessorio = Cautela_Acessorio()
         cautela_acessorio.data_de_retirada = post.get('cautela_data_retirada', '') +' '+ post.get('cautela_horario_retirada', '')
         cautela_acessorio.militar = militar_cautela
-        cautela_acessorio.acessorio = acessorio
+        cautela_acessorio.reserva_acessorio = reserva_acessorio
         cautela_acessorio.quantidade = post.get('cautela_acessorio_quantidade', '')
 
-        reserva_acesso_raw = Reserva.objects.raw("SELECT id FROM registro_reserva_acessorio WHERE acessorio_id ="+str(post.get('cautela_acessorio_id', '')))
-        if list(reserva_acesso_raw):
-            r_reserva_acesso = reserva_acesso_raw[0]
-            reserva_acessorio = Reserva_Acessorio.objects.get(pk=r_reserva_acesso.id)
-
-            if( int(reserva_acessorio.quantidade) >= int(cautela_acessorio.quantidade)):
-                reserva_acessorio.quantidade = int(reserva_acessorio.quantidade) - int(post.get('cautela_acessorio_quantidade', ''))
-                reserva_acessorio.save()
-                cautela_acessorio.save()
-                save = 1
-            else:
-                save = 0
+        if( int(reserva_acessorio.quantidade) >= int(cautela_acessorio.quantidade)):
+            reserva_acessorio.quantidade = int(reserva_acessorio.quantidade) - int(post.get('cautela_acessorio_quantidade', ''))
+            reserva_acessorio.save()
+            cautela_acessorio.save()
+            save = 1
+        else:
+            save = 0
 
     #verifica se foi feito algum save, se não mitiga o erro
     if( save == 1 ):
@@ -327,4 +312,88 @@ def formularioCautela(request):
     context['save'] = save
 
     #return HtppResponseRedirect('/p_registro/cautelas')
+    return HttpResponse(template.render(context, request))
+
+@login_required(login_url="../admin/login/")
+@transaction.atomic
+def devolver(request):
+    template = loader.get_template('registro/devolver.html')
+
+    sid = transaction.savepoint()
+    get = request.GET
+
+    c_armamento_id = get.get('carma_id', '')
+    c_municao_id = get.get('cmuni_id', '')
+    c_acessorio_id = get.get('caces_id', '')
+
+    save = None
+    num_devolvido = None
+    if c_armamento_id != '':
+        cautela_armamento = Cautela_Armamento.objects.get(id=c_armamento_id)
+        num_devolvido = cautela_armamento.quantidade
+
+        reserva_armamento = Reserva_Armamento.objects.get(id=cautela_armamento.reserva_armamento_id)
+        reserva_armamento.quantidade = reserva_armamento.quantidade + cautela_armamento.quantidade
+        reserva_armamento.save()
+
+        cautela_armamento.delete()
+        save = 1
+
+    if c_municao_id != '':
+        cautela_municao = Cautela_Municao.objects.get(id=c_municao_id)
+        num_devolvido = cautela_municao.quantidade
+
+        reserva_municao = Reserva_Municao.objects.get(id=cautela_municao.reserva_municao_id)
+        reserva_municao.quantidade = reserva_municao.quantidade + cautela_municao.quantidade
+        reserva_municao.save()
+
+        cautela_municao.delete()
+        save = 1
+
+    if c_acessorio_id != '':
+        cautela_acessorio = Cautela_Acessorio.objects.get(id=c_acessorio_id)
+        num_devolvido = cautela_acessorio.quantidade
+
+        reserva_acessorio = Reserva_Acessorio.objects.get(id=cautela_acessorio.reserva_acessorio_id)
+        reserva_acessorio.quantidade = reserva_acessorio.quantidade + cautela_acessorio.quantidade
+        reserva_acessorio.save()
+
+        cautela_acessorio.delete()
+        save = 1
+
+    context = {}
+    if save:
+        context = {
+            'save': 1,
+            'num_devolvido': int(num_devolvido),
+        }
+
+    if c_armamento_id != '':
+        context['count_armamento'] = Cautela_Armamento.objects.raw('\
+                SELECT id, count(*) num FROM  registro_cautela_armamento\
+                WHERE militar_id = '+str(cautela_armamento.militar_id)+'\
+        ')[0].num
+
+        context['militar'] = Militar.objects.get(id=cautela_armamento.militar_id)
+
+    if c_municao_id != '':
+        context['count_municao'] = Cautela_Municao.objects.raw('\
+                SELECT id, count(*) num FROM  registro_cautela_municao\
+                WHERE militar_id = '+str(cautela_municao.militar_id)+'\
+        ')[0].num
+
+        context['militar'] = Militar.objects.get(id=cautela_municao.militar_id)
+
+    if c_acessorio_id != '':
+        context['count_acessorio'] = Cautela_Acessorio.objects.raw('\
+                SELECT id, count(*) num FROM  registro_cautela_acessorio\
+                WHERE militar_id = '+str(cautela_acessorio.militar_id)+'\
+        ')[0].num
+
+        context['militar'] = Militar.objects.get(id=cautela_acessorio.militar_id)
+
+    #transaction.savepoint_rollback(sid)
+    transaction.savepoint_commit(sid)
+    transaction.atomic()
+    #return HttpResponse(context)
     return HttpResponse(template.render(context, request))

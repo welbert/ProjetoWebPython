@@ -1,0 +1,44 @@
+
+{% extends 'base/layout.html' %}
+
+
+{% block title %}Cautelar{% endblock %}
+
+{% block content %}
+
+<div class="header clearfix">
+    <nav>
+      <ul class="nav nav-pills" style=" margin-left: 31%;">
+        <li role="presentation" ><a href="{% url 'listar_cautelas' %}">Listar Cautelas</a></li>
+        <li role="presentation" ><a href="{% url 'cautelas' %}">Cautelar</a></li>
+        <li role="presentation" ><a href="{% url 'listar_cautelas' %}">Histórico de Devoluções</a></li>
+      </ul>
+    </nav>
+</div>
+
+{% if save %}
+
+  <h3>Militar {{militar.nome_de_guerra}}, agora tem: <br><br>
+
+{% if count_armamento > -1 %}
+
+    <p>{{count_armamento}} items de Armamento </p>
+
+{% elif count_municao > -1 %}
+
+    <p> {{count_municao}} items de Munição </p>
+
+{% elif count_acessorio > -1 %}
+
+    <p> {{count_acessorio}} items de Acessório </p>
+
+{% endif %}
+
+<p> {{num_devolvido}} items foram devolvidos. </p>
+
+  </h3>
+
+{% endif %}
+
+{% endblock %}
+

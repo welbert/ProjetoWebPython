@@ -48,24 +48,30 @@ class Reserva(models.Model):
 class Cautela_Armamento(models.Model):
     data_de_retirada = models.CharField('Data de Retirada', max_length=25)
     militar = models.ForeignKey('Militar',blank=True,null=True)
-    armamento = models.ForeignKey('Armamento')
+    reserva_armamento = models.ForeignKey('Reserva_Armamento', related_name='reserva_armamento')
     quantidade = models.FloatField('Quantidade')
+    class Meta:
+        managed = False
     def __str__(self):
         return str(self.data_de_retirada)
 
 class Cautela_Municao(models.Model):
     data_de_retirada = models.CharField('Data de Retirada', max_length=25)
     militar = models.ForeignKey('Militar',blank=True,null=True)
-    municao = models.ForeignKey('Municao')
+    reserva_municao = models.ForeignKey('Reserva_Municao', related_name='reserva_municao')
     quantidade = models.FloatField('Quantidade')
+    class Meta:
+        managed = False
     def __str__(self):
         return str(self.data_de_retirada)
 
 class Cautela_Acessorio(models.Model):
     data_de_retirada = models.CharField('Data de Retirada', max_length=25)
     militar = models.ForeignKey('Militar',blank=True,null=True)
-    acessorio = models.ForeignKey('Acessorio')
+    reserva_acessorio = models.ForeignKey('Reserva_Acessorio', related_name='reserva_acessorio')
     quantidade = models.FloatField('Quantidade')
+    class Meta:
+        managed = False
     def __str__(self):
         return str(self.data_de_retirada)
 

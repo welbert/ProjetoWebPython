@@ -9,6 +9,7 @@ urlpatterns = [
     url(r'^p_registro/acessorio', views.list_acesso, name='acessorio'),
     url(r'^p_registro/listar_cautelas', views.cautelar_listar, name='listar_cautelas'),
     url(r'^p_registro/cautelas', views.cautelar_index, name='cautelas'),
+    url(r'^p_registro/devolver', views.devolver, name='devolver'),
     url(r'^cautelaRegistro', views.formularioCautela, name='formularioCautela'),
     url(r'^(?P<equip_reserva_id>[0-9]+)/$', views.shows_equip_reserva_num, name='shows_equip_reserva_id'),
 ]

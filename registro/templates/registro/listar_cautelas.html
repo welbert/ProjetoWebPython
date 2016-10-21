@@ -9,7 +9,7 @@
       <ul class="nav nav-pills" style=" margin-left: 31%;">
         <li role="presentation" ><a href="{% url 'listar_cautelas' %}">Listar Cautelas</a></li>
         <li role="presentation" ><a href="{% url 'cautelas' %}">Cautelar</a></li>
-        <li role="presentation" ><a href="{% url 'listar_cautelas' %}">Histórico de Devoluções</a></li>
+<!--        <li role="presentation" ><a href="{% url 'listar_cautelas' %}">Histórico de Devoluções</a></li> -->
       </ul>
     </nav>
 </div>
@@ -36,7 +36,7 @@
             <td>{{ item.nome_de_guerra}}</td>
             <td>{{ item.data_de_retirada}}</td>
             <td>
-                <a href=""><button class="btn btn-success">Devolver</button></a>
+                <a href="/p_registro/devolver/?carma_id={{item.id}}" onclick="return confirm('Tem certeza que deseja Devolver?')"><button class="btn btn-success">Devolver</button></a>
             <!--    <a href="{% url 'index' %}" onclick="return confirm('Deseja Excluir?')"><button class="btn btn-danger">Excluir!</button></a>-->
             </td>
         </tr>
@@ -68,8 +68,7 @@
             <td>{{ item.nome_de_guerra}}</td>
             <td>{{ item.data_de_retirada}}</td>
             <td>
-                <a href=""><button class="btn btn-success">Devolver</button></a>
-            <!--    <a href="{% url 'index' %}" onclick="return confirm('Deseja Excluir?')"><button class="btn btn-danger">Excluir!</button></a>-->
+                <a href="/p_registro/devolver/?cmuni_id={{item.id}}" onclick="return confirm('Tem certeza que deseja Devolver?')"><button class="btn btn-success">Devolver</button></a>
             </td>
         </tr>
     {% endfor %}
@@ -102,8 +101,8 @@
             <td>{{ item.nome_de_guerra}}</td>
             <td>{{ item.data_de_retirada}}</td>
             <td>
-                <a href=""><button class="btn btn-success">Devolver</button></a>
-            <!--    <a href="{% url 'index' %}" onclick="return confirm('Deseja Excluir?')"><button class="btn btn-danger">Excluir!</button></a>-->
+                <a href="/p_registro/devolver/?caces_id={{item.id}}" onclick="return confirm('Tem certeza que deseja Devolver?')"><button class="btn btn-success">Devolver</button></a>
+            <!--    <a href="/p_registro/devolver/?cacce_id={{item.id}}" onclick="return confirm('Deseja Excluir?')"><button class="btn btn-danger">Excluir!</button></a>-->
             </td>
         </tr>
     {% endfor %}

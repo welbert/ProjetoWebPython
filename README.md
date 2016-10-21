@@ -52,4 +52,4 @@ Pass: virtualbox
   - [x] Código back-end. localhost:8000/p_registro/ ou listar para cada um através da opção do menu
   - [x] Código front-end. Adicionado primeiro layout. Validar com o restante dos membros hoje (14/10)
 - [x] **Regra(Negócio) - item 2** Um outro militar pode se dirigir a reserva de armamento para cautelar armamento(s), munição e/ou acessórios. Nesse momento o militar da reserva registra essa retirada (Manter Cautela) informando o militar e tudo que ele está retirando, nesse momento é feito um registro com data, hora, militar responsável e todo o material retirado.
-- [ ] **Regra(Negócio) - item 3** Quando o militar retorna a reserva de armamento para devolver o material, é dado a baixa no equipamento. Esse material pode ser devolvido aos poucos.
+- [x] **Regra(Negócio) - item 3** Quando o militar retorna a reserva de armamento para devolver o material, é dado a baixa no equipamento. Esse material pode ser devolvido aos poucos. (implementado: devolução feita integral)

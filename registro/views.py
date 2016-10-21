@@ -14,6 +14,7 @@ def index(request):
     return HttpResponse(template.render(request))
 
 
+
 @login_required(login_url="../admin/login/")
 def listar(request):
     #return HttpResponse( "This is a test index" );
@@ -37,6 +38,7 @@ def listar(request):
     }
     return HttpResponse(template.render(context, request))
 
+
 @login_required(login_url="../admin/login/")
 def list_arma(request):
     template = loader.get_template('registro/listar.html')
@@ -49,6 +51,7 @@ def list_arma(request):
         'armamento_count': armamento_count,
     }
     return HttpResponse(template.render(context, request))
+
 
 @login_required(login_url="../admin/login/")
 def list_muni(request):
@@ -64,6 +67,7 @@ def list_muni(request):
     }
     return HttpResponse(template.render(context, request))
 
+
 @login_required(login_url="../admin/login/")
 def list_acesso(request):
     template = loader.get_template('registro/listar.html')
@@ -77,6 +81,7 @@ def list_acesso(request):
         'acessorio_count': acessorio_count,
     }
     return HttpResponse(template.render(context, request))
+
 
 def shows_equip_reserva_num(request, equip_reserva_id):
     #response = "You can see here number of each type of equipament/armament you have in the storage (reserva) %s"
@@ -120,6 +125,7 @@ def shows_equip_reserva_num(request, equip_reserva_id):
 
     return HttpResponse( output )
 
+
 @login_required(login_url="../admin/login/")
 def cautelar_index(request):
 
@@ -127,7 +133,10 @@ def cautelar_index(request):
     militar_resp = Militar.objects.raw("SELECT * FROM registro_militar WHERE user_id = "+str(request.user.id))[0]
     #reserva = Reserva.objects.all()
     militares = Militar.objects.raw('SELECT id, nome_de_guerra FROM registro_militar')
-    armamento = Armamento.objects.raw('SELECT id, (id||" - "||modelo||" - "||fabricante||" - "||numero_de_serie) as name FROM registro_armamento')
+    armamento = Armamento.objects.raw(
+        'SELECT RA.id, (RA.id||" - "||modelo||" - "||fabricante||" - "||numero_de_serie) as name, RRA.reserva_id FROM registro_armamento RA \
+        JOIN registro_reserva_armamento RRA WHERE RA.id = RRA.armamento_id'
+    )
     municao = Municao.objects.all()
     acessorio = Acessorio.objects.all()
 
@@ -144,6 +153,7 @@ def cautelar_index(request):
 
     template = loader.get_template('registro/cautelar.html')
     return HttpResponse(template.render(context, request))
+
 
 @transaction.atomic
 def formularioCautela(request):

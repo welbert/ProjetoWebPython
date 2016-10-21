@@ -23,7 +23,7 @@
 
 <br>
 
-<form action="{%url 'formularioCautela' %}" method="post" class="col-md-12" id="formulario-cautela">
+<form action="{%url 'formularioCautela' %}" method="post" class="col-md-13" id="formulario-cautela">
   {% csrf_token %}
 
   <input type="hidden" name="cautela_militar_resp_id" value="{{ militar_resp.id }}">
@@ -73,9 +73,9 @@
     margin-top: -1%;
     float: right;
     ">
-        <option value="">[ID - Modelo - Fabricante - N de Serie]</option>
+        <option value="">[Reserva - ID - Modelo - Fabricante - N de Serie]</option>
       {% for item in armamento %}
-        <option value="{{ item.id }}"> {{item.name}}</option>
+        <option value="{{ item.id }}">{{item.sigla}} - {{item.id}} - {{item.name}}</option>
       {% endfor %}
     </select>
   </label>
@@ -99,9 +99,9 @@
     margin-top: -1%;
     float: right;
     ">
-        <option value="">[ID - Calibre - Descricao] </option>
+        <option value="">[Reserva - ID - Calibre - Descricao] </option>
       {% for item in municao %}
-        <option value="{{ item.id }}">{{item.id}} - {{ item.calibre}} - {{item.descricao}}</option>
+        <option value="{{ item.id }}">{{item.sigla}} - {{item.id}} - {{ item.calibre}} - {{item.descricao}}</option>
       {% endfor %}
     </select>
   </label>
@@ -125,9 +125,9 @@
     margin-top: -1%;
     float: right;
     ">
-        <option value=""> [ID - Descricao] </option>
+        <option value=""> [Reserva - ID - Descricao] </option>
       {% for item in acessorio%}
-        <option value="{{ item.id }}"> {{item.id}} - {{ item.descricao}}</option>
+        <option value="{{ item.id }}"> {{item.sigla}} - {{item.id}} - {{ item.descricao}}</option>
       {% endfor %}
     </select>
   </label>

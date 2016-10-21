@@ -14,7 +14,6 @@ def index(request):
     return HttpResponse(template.render(request))
 
 
-
 @login_required(login_url="../admin/login/")
 def listar(request):
     #return HttpResponse( "This is a test index" );
@@ -134,12 +133,18 @@ def cautelar_index(request):
     #reserva = Reserva.objects.all()
     militares = Militar.objects.raw('SELECT id, nome_de_guerra FROM registro_militar')
     armamento = Armamento.objects.raw(
-        'SELECT RA.id, (RA.id||" - "||modelo||" - "||fabricante||" - "||numero_de_serie) as name, RRA.reserva_id FROM registro_armamento RA \
-        JOIN registro_reserva_armamento RRA WHERE RA.id = RRA.armamento_id'
+        'SELECT RA.id, (modelo||" - "||fabricante||" - "||numero_de_serie) as name, RRA.reserva_id, RR.sigla FROM registro_armamento RA \
+        JOIN registro_reserva_armamento RRA ON RA.id = RRA.armamento_id and RRA.quantidade > 0\
+        JOIN registro_reserva RR ON RRA.reserva_id = RR.id'
     )
-    municao = Municao.objects.all()
-    acessorio = Acessorio.objects.all()
+    municao = Municao.objects.raw('SELECT RM.id, RM.calibre, RM.descricao, RRM.reserva_id, RR.sigla FROM registro_municao RM\
+            JOIN registro_reserva_municao RRM ON RRM.municao_id = RM.id and RRM.quantidade > 0\
+            JOIN registro_reserva RR ON RRM.reserva_id = RR.id')
+    #municao = Municao.objects.all()
 
+    acessorio = Acessorio.objects.raw('SELECT RAc.id, RAc.descricao, RRAc.reserva_id, RR.sigla FROM registro_acessorio RAc\
+        JOIN registro_reserva_acessorio RRAc ON RRAc.acessorio_id = RAc.id and RRAc.quantidade > 0\
+        JOIN registro_reserva RR ON RRAc.reserva_id = RR.id')
 
     #return HttpResponse(armamento.name)
 
@@ -168,7 +173,7 @@ def formularioCautela(request):
     militar_resp = Militar.objects.get(pk=post.get('cautela_militar_resp_id', ''))
 
     reserva_arma_raw = None
-    if post.get('cautela_armamento_id', '') != '':
+    if post.get('cautela_armamento_id', '') != '' and int(post.get('cautela_armamento_quantidade', '')) > 0:
         armamento = Armamento.objects.get(pk=post.get('cautela_armamento_id', ''))
 
         cautela_armamento = Cautela_Armamento()
@@ -182,30 +187,38 @@ def formularioCautela(request):
         if list(reserva_arma_raw):
             r_reserva_arma = reserva_arma_raw[0]
             reserva_armamento = Reserva_Armamento.objects.get(pk=r_reserva_arma.id)
-            reserva_armamento.quantidade = int(reserva_armamento.quantidade) - int(post.get('cautela_armamento_quantidade', ''))
-            reserva_armamento.save()
-            cautela_armamento.save()
+
+            if(int(reserva_armamento.quantidade) >= int(cautela_armamento.quantidade)):
+                reserva_armamento.quantidade = int(reserva_armamento.quantidade) - int(post.get('cautela_armamento_quantidade', ''))
+                reserva_armamento.save()
+                cautela_armamento.save()
+            else:
+                save = 0
 
     reserva_muni_raw = None
-    if post.get('cautela_municao_id','') != '':
+    if post.get('cautela_municao_id','') != '' and int(post.get('cautela_municao_quantidade', '')) > 0:
         municao = Municao.objects.get(pk=post.get('cautela_municao_id', ''))
 
-        cautela_municao = Cautela_Armamento()
+        cautela_municao = Cautela_Municao()
         cautela_municao.data_de_retirada = post.get('cautela_data_retirada', '') + ' '+post.get('cautela_horario_retirada', '')
         cautela_municao.militar = militar_cautela
-        cautela_municao.municao= municao
+        cautela_municao.municao = municao
         cautela_municao.quantidade = post.get('cautela_municao_quantidade', '')
 
         reserva_muni_raw = Reserva.objects.raw("SELECT id FROM registro_reserva_municao WHERE municao_id ="+str(post.get('cautela_municao_id', '')))
         if list(reserva_muni_raw):
             r_reserva_muni = reserva_muni_raw[0]
             reserva_municao = Reserva_Municao.objects.get(pk=r_reserva_muni.id)
-            reserva_municao.quantidade = int(reserva_municao.quantidade) - int(post.get('cautela_municao_quantidade', ''))
-            reserva_municao.save()
-            cautela_municao.save()
+
+            if(int(reserva_municao.quantidade) >= int(cautela_municao.quantidade)):
+                reserva_municao.quantidade = int(reserva_municao.quantidade) - int(post.get('cautela_municao_quantidade', ''))
+                reserva_municao.save()
+                cautela_municao.save()
+            else:
+                save = 0
 
     reserva_acesso_raw = None
-    if post.get('cautela_acessorio_id','') != '':
+    if post.get('cautela_acessorio_id','') != '' and int(post.get('cautela_acessorio_quantidade', '')) > 0:
         acessorio = Acessorio.objects.get(pk=post.get('cautela_acessorio_id', ''))
 
         cautela_acessorio = Cautela_Acessorio()
@@ -218,9 +231,13 @@ def formularioCautela(request):
         if list(reserva_acesso_raw):
             r_reserva_acesso = reserva_acesso_raw[0]
             reserva_acessorio = Reserva_Acessorio.objects.get(pk=r_reserva_acesso.id)
-            reserva_acessorio.quantidade = int(reserva_acessorio.quantidade) - int(post.get('cautela_acessorio_quantidade', ''))
-            reserva_acessorio.save()
-            cautela_acessorio.save()
+
+            if( int(reserva_acessorio.quantidade) >= int(cautela_acessorio.quantidade)):
+                reserva_acessorio.quantidade = int(reserva_acessorio.quantidade) - int(post.get('cautela_acessorio_quantidade', ''))
+                reserva_acessorio.save()
+                cautela_acessorio.save()
+            else:
+                save = 0
 
     cautela_militar = Cautela_Militar()
     cautela_militar.militar = militar_cautela
@@ -230,8 +247,16 @@ def formularioCautela(request):
     transaction.savepoint_commit(sid)
     transaction.atomic()
     template = loader.get_template('registro/cautelar.html')
+
+    #Gera mensagem de tratamento e redireciona pra pagina template de cautelas
+    if( 'save' in locals() and save == 0):
+        save = "Erro: Quantidade maior que o disponível na reserva"
+    else:
+        save = "Cautela realizada com sucesso"
+
     context = {
-        'save': "Cautela realizada com sucesso",
+        'save': save,
     }
+
     #return HtppResponseRedirect('/p_registro/cautelas')
     return HttpResponse(template.render(context, request))

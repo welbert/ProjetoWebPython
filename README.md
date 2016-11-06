@@ -38,7 +38,7 @@ Pass: virtualbox
   - [x] Contracapa com tema, equipe, dados da disciplina e demais informações pertinentes ao tema.
   - [x] Diagrama de Classes 
   - [x] Entidade e Relacionamento
-- [ ] Slides
+- [x] Slides
 - [x] *Login/Logout*
 - [x] *Menu de opções*
 - [x] **Tela(Simples)** *Usuário* (nome completo, login, senha, email) && **Tela(Simples)** *Militar* (posto/graduação, nome de guerra);
